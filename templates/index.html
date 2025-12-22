@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MITS IMS</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        slate: {
+                            850: '#151b2e',
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'pulse-slow': 'pulse 3s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .glass-header {
+            background: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #020617;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-950 text-white min-h-screen selection:bg-blue-500/30 overflow-x-hidden">
+
+    <!-- Background Gradients Removed -->
+    <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
+        <!-- Solid background is handled by bg-slate-950 on body -->
+    </div>
+
+    <!-- Login Wrapper -->
+    <div id="login-wrapper" class="flex flex-col items-center justify-center min-h-screen p-4">
+
+        <!-- Login Card -->
+        <div id="login-section"
+            class="w-full max-w-sm glass rounded-3xl p-8 shadow-2xl animate-fade-in relative overflow-hidden group">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-500"></div>
+
+            <div class="text-center mb-8 mt-2">
+                <h1 class="text-3xl font-bold tracking-tight text-white mb-1">MITS IMS</h1>
+                <p class="text-slate-400 text-sm font-medium">Attendance Portal</p>
+            </div>
+
+            <form id="login-form" autocomplete="off" class="space-y-5">
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <i class="fa-solid fa-user text-blue-500"></i>
+                    </div>
+                    <input type="text" id="username" name="username" placeholder="Register Number" required
+                        autocomplete="off"
+                        class="w-full bg-blue-50/5 border border-white/10 text-white text-sm rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full pl-11 p-3.5 placeholder-slate-500 transition-all outline-none">
+                </div>
+
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <i class="fa-solid fa-lock text-blue-500"></i>
+                    </div>
+                    <input type="password" id="password" name="password" placeholder="Password" required
+                        autocomplete="new-password"
+                        class="w-full bg-blue-50/5 border border-white/10 text-white text-sm rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full pl-11 p-3.5 pr-10 placeholder-slate-500 transition-all outline-none">
+                    <div class="absolute inset-y-0 right-0 pr-4 flex items-center cursor-pointer text-slate-500 hover:text-white transition-colors"
+                        id="toggle-password">
+                        <i class="fa-solid fa-eye-slash"></i>
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" id="submit-btn"
+                        class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-800 font-medium rounded-xl text-sm px-5 py-3.5 text-center transition-all shadow-lg hover:shadow-blue-600/30 flex items-center justify-center gap-2 group-hover:scale-[1.02]">
+                        <span>Get Attendance</span>
+                        <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </button>
+                </div>
+            </form>
+
+            <div id="error-message"
+                class="hidden mt-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs text-center font-medium">
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading-section" class="hidden w-full max-w-sm glass rounded-3xl p-8 text-center animate-fade-in">
+            <div class="relative w-16 h-16 mx-auto mb-6">
+                <div class="absolute inset-0 border-4 border-blue-500/20 rounded-full"></div>
+                <div class="absolute inset-0 border-4 border-blue-500 rounded-full border-t-transparent animate-spin">
+                </div>
+            </div>
+            <h2 class="text-xl font-bold text-white mb-2">Connecting...</h2>
+            <p class="text-slate-400 text-sm mb-6">Securely accessing MITS Portal</p>
+
+            <div class="w-full bg-white/5 rounded-full h-1.5 overflow-hidden">
+                <div id="progress-fill" class="bg-blue-500 h-1.5 rounded-full w-[5%] transition-all duration-300"></div>
+            </div>
+            <p id="progress-text" class="text-xs text-blue-400 mt-3 font-medium">Initializing...</p>
+        </div>
+    </div>
+
+    <!-- Dashboard Section -->
+    <div id="dashboard-section" class="hidden min-h-screen pt-20 pb-10 px-4 md:px-8 max-w-7xl mx-auto animate-fade-in">
+
+        <!-- Fixed Header -->
+        <header class="fixed top-0 left-0 w-full h-16 glass-header z-50 px-4 md:px-8 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-graduation-cap text-blue-500 text-xl"></i>
+                <span class="font-bold text-lg tracking-tight">MITS IMS</span>
+            </div>
+
+            <div class="flex items-center gap-4 md:gap-6">
+                <div class="flex items-center gap-3 text-right">
+                    <div class="flex flex-col items-end">
+                        <span class="text-xs md:text-sm font-medium text-white" id="display-name">Student</span>
+                    </div>
+                    <span
+                        class="text-[10px] md:text-xs font-mono text-slate-400 bg-white/5 px-2 py-1 rounded border border-white/5"
+                        id="display-id">ID: ----</span>
+                </div>
+
+                <button id="logout-btn"
+                    class="bg-red-500/10 hover:bg-red-500/20 text-red-500 hover:text-red-400 text-xs md:text-sm font-medium px-4 py-2 rounded-lg border border-red-500/20 transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span class="hidden sm:inline">Logout</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <!-- Header Row -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4 mt-4">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold text-white mb-1">Overall Attendance</h1>
+                <p class="text-slate-400 text-sm">Target: 75% for Safe Zone</p>
+            </div>
+            <button id="refresh-btn"
+                class="bg-white/5 hover:bg-white/10 border border-white/10 text-white px-4 py-2 rounded-xl text-sm font-medium transition-all flex items-center gap-2 group">
+                <i
+                    class="fa-solid fa-rotate-right group-hover:rotate-180 transition-transform duration-500 text-blue-400"></i>
+                Refresh
+            </button>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-10">
+            <!-- Aggregate Hero -->
+            <div
+                class="lg:col-span-5 glass rounded-3xl p-8 relative overflow-hidden flex flex-col items-center justify-center text-center min-h-[220px]">
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent"></div>
+                <h3 class="relative text-slate-400 text-xs font-bold uppercase tracking-[0.2em] mb-4">Aggregate
+                    Percentage</h3>
+                <div class="relative text-6xl md:text-7xl font-extrabold text-white tracking-tight"
+                    id="overall-percentage">0%</div>
+                <div class="relative mt-4 flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                    <span class="text-xs text-slate-400" id="status-text">Calculated from all sessions</span>
+                </div>
+            </div>
+
+            <!-- Detailed Counts -->
+            <div class="lg:col-span-7 grid grid-cols-2 gap-6">
+                <div
+                    class="glass rounded-3xl p-6 flex flex-col justify-center items-start hover:bg-white/5 transition-colors group">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-white mb-1" id="total-attended">0</div>
+                    <div class="text-slate-400 text-xs font-bold uppercase tracking-wider">Classes Attended</div>
+                </div>
+
+                <div
+                    class="glass rounded-3xl p-6 flex flex-col justify-center items-start hover:bg-white/5 transition-colors group">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-white mb-1" id="total-conducted">0</div>
+                    <div class="text-slate-400 text-xs font-bold uppercase tracking-wider">Classes Conducted</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course List -->
+        <div class="space-y-4" id="course-list">
+            <!-- JS will populate this -->
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-12 pt-8 border-t border-white/5 text-center text-slate-500 text-xs pb-4">
+            <p class="mb-2">&copy; 2025 MITS IMS. All Rights Reserved.</p>
+            <p>Developed by <span class="text-slate-400 font-medium">BHOJANAPU DEVA RAJ</span></p>
+        </footer>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>
