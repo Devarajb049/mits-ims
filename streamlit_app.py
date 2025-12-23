@@ -342,31 +342,38 @@ else:
         
         for item in data:
             perc = item['percentage']
+            attended = item['attended']
+            total = item['total']
+            
+            # Recalculate true percentage for graph width validity (fallback if perc is 0 but stats exist)
+            if total > 0:
+                graph_width = (attended / total) * 100
+                if perc == 0 and graph_width > 0:
+                     perc = round(graph_width, 2)
+            else:
+                graph_width = 0
             
             border_cls = "border-green"
             text_cls = "text-green"
+            bar_color = "#34d399"
             
             if perc < 75:
                 border_cls = "border-yellow"
                 text_cls = "text-yellow"
+                bar_color = "#fbbf24"
             if perc < 65:
                 border_cls = "border-red"
                 text_cls = "text-red"
+                bar_color = "#f87171"
                 
             # Custom Card HTML with Progress Bar Graph
-            # Calculate width for the progress bar relative to total (max scale, but here just percentage bar)
-            # Actually user wants Attended vs Conducted graph. 
-            # Simple linear visual: [ ======= (Attended) ... (Total - Attended) ]
-            
-            bar_color = "#34d399" if perc >= 75 else "#fbbf24" if perc >= 65 else "#f87171"
-            
             card_html = f'''
             <div class="custom-card" style="flex-direction: column; align-items: stretch; gap: 0.75rem;">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <div>
                         <div style="font-weight: 600; font-size: 1rem; color: #f1f5f9; margin-bottom: 0.25rem;">{item['code']}</div>
                         <div style="font-size: 0.8rem; color: #94a3b8;">
-                            <span style="color: #cbd5e1; font-weight: 500;">{item['attended']}</span> attended of {item['total']}
+                            <span style="color: #cbd5e1; font-weight: 500;">{attended}</span> attended of {total}
                         </div>
                     </div>
                     <div class="percentage-display {text_cls}">
@@ -376,10 +383,10 @@ else:
                 
                 <!-- Mini Bar Graph -->
                 <div style="width: 100%; display: flex; align-items: center; gap: 0.5rem;">
-                   <div style="flex-grow: 1; height: 6px; background: #1e293b; border-radius: 4px; overflow: hidden;">
-                       <div style="width: {perc}%; height: 100%; background: {bar_color}; border-radius: 4px;"></div>
+                   <div style="flex-grow: 1; height: 6px; background: #1e293b; border-radius: 4px; overflow: hidden; border: 1px solid #334155;">
+                       <div style="width: {graph_width}%; height: 100%; background: {bar_color}; border-radius: 4px;"></div>
                    </div>
-                   <div style="font-size: 0.7rem; color: #64748b; min-width: 30px; text-align: right;"></div>
+                   <div style="font-size: 0.7rem; color: #64748b; min-width: 40px; text-align: right;">{int(graph_width)}%</div>
                 </div>
             </div>
             '''
