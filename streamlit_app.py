@@ -17,13 +17,13 @@ st.markdown("""
     <style>
     /* Global Reset & Theme */
     .stApp {
-        background: #020617; /* Deep Navy/Black base */
+        background: radial-gradient(circle at 50% 10%, #2e3b4e, #020617);
         font-family: 'Outfit', sans-serif;
         color: #e2e8f0;
         overflow-x: hidden;
     }
     
-    /* Hide Defaults & Floating Elements */
+    /* Hide Defaults */
     header[data-testid="stHeader"], footer, #MainMenu, .stDeployButton, 
     [data-testid="stToolbar"], [data-testid="stDecoration"], 
     [data-testid="stStatusWidget"], a.anchor-link, .css-15zrgzn, 
@@ -33,44 +33,25 @@ st.markdown("""
         height: 0 !important;
     }
 
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-    }
-    ::-webkit-scrollbar-track {
-        background: #020617; 
-    }
-    ::-webkit-scrollbar-thumb {
-        background: #334155; 
-        border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-        background: #475569; 
-    }
-
     /* Layout */
     .block-container {
-        padding-top: 1rem !important;
+        padding-top: 5rem !important;
         padding-bottom: 2rem !important;
-        max-width: 600px; /* Mobile-first width constraint */
+        max-width: 450px; /* Narrower for mobile/login focus */
         margin: 0 auto;
     }
     
-    /* Login Card */
+    /* Login Form Container - Transparent */
     div[data-testid="stForm"] {
-        background: #0b1421;
-        border: 1px solid #1e293b;
-        border-radius: 1.5rem;
-        padding: 2rem;
-        box-shadow: 0 0 50px -10px rgba(56, 189, 248, 0.1);
-        max-width: 400px; 
-        margin: 0 auto;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
     }
     
-    /* Custom Card Style (Screenshot Match) */
+    /* Dashboard Cards (Keep existing style for dashboard) */
     .custom-card {
-        background: #0f172a; /* Dark Matte Navy */
+        background: #0f172a; 
         border-radius: 1rem;
         padding: 1.25rem;
         margin-bottom: 0.75rem;
@@ -79,13 +60,10 @@ st.markdown("""
         align-items: center;
         border: 1px solid #1e293b;
     }
-    
     .percentage-display {
         font-weight: 800;
         font-size: 1.5rem;
     }
-    
-    /* Dashboard Aggregate */
     .aggregate-card {
         background: radial-gradient(circle at 50% 100%, #1e293b, #0f172a);
         border: 1px solid #334155;
@@ -94,83 +72,58 @@ st.markdown("""
         text-align: center;
         margin-bottom: 2rem;
     }
-
-    /* Colors */
     .text-green { color: #34d399; }
     .text-yellow { color: #fbbf24; }
     .text-red { color: #f87171; }
     
-    /* PRECISE INPUT STYLING FOR PASSWORD FIELD */
-    /* Target the input wrapper */
+    /* GLASSMORPHISM INPUTS */
     .stTextInput > div > div {
-        background: #1a1a2e !important; /* Very dark blue-grey/black */
-        border: 1px solid #2d3748 !important; /* Subtle border */
-        border-radius: 0.75rem !important;
-        transition: all 0.2s ease-in-out;
-        box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.2) !important; /* Inner shadow for depth */
+        background: rgba(255, 255, 255, 0.1) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-radius: 50px !important; /* PILL SHAPE */
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
     }
     
     /* Focus state */
     .stTextInput > div > div:focus-within {
-        border-color: #38bdf8 !important;
-        box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2), inset 0 2px 4px 0 rgba(0, 0, 0, 0.2) !important;
-        background: #1e293b !important; /* Slightly lighter on focus */
+        background: rgba(255, 255, 255, 0.2) !important;
+        border-color: rgba(255, 255, 255, 0.5) !important;
+        box-shadow: 0 0 15px rgba(255,255,255,0.1) !important;
     }
     
-    /* The Input Element itself */
+    /* Input Text */
     .stTextInput input {
-        color: #f1f5f9 !important; /* Bright white text */
-        background-color: transparent !important;
-        font-family: 'Outfit', sans-serif !important;
+        color: #ffffff !important;
+        padding-left: 1rem !important;
         font-weight: 500;
-        letter-spacing: 0.05em; /* Spacing for password dots */
-        padding-left: 0.5rem;
     }
-
-    /* Placeholder Text */
     .stTextInput input::placeholder {
-        color: #64748b !important;
-        opacity: 1;
-        letter-spacing: normal;
-    }
-
-    /* Eye Icon Visibility (if accessible) */
-    /* Attempting to target the SVG icon inside the input */
-    .stTextInput button[aria-label="Show password"] {
-         color: #94a3b8 !important;
-    }
-    .stTextInput button[aria-label="Show password"]:hover {
-         color: #f1f5f9 !important;
-    }
-
-    /* Label Styling */
-    .stTextInput label {
         color: #94a3b8 !important;
-        font-size: 0.85rem !important;
-        font-weight: 500 !important;
-        margin-bottom: 0.4rem !important;
+    }
+
+    /* Hide Labels for cleaner look */
+    .stTextInput label {
+        display: none !important;
     }
     
-    /* Button */
+    /* BUTTON */
     .stButton > button {
-        background: #3b82f6; 
-        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-        color: white; 
+        background: #ffffff !important; 
+        color: #0f172a !important; 
         border: none;
         padding: 0.75rem;
-        border-radius: 0.75rem;
+        border-radius: 50px !important; /* PILL SHAPE */
         width: 100%;
-        font-weight: 600;
+        font-weight: 700;
         font-size: 1rem;
         transition: transform 0.1s, box-shadow 0.2s;
-        box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
+        margin-top: 1rem;
     }
     .stButton > button:hover {
+        background: #f1f5f9 !important;
         transform: translateY(-1px);
-        box-shadow: 0 6px 12px -2px rgba(59, 130, 246, 0.4);
-    }
-    .stButton > button:active {
-        transform: translateY(0);
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
     }
     </style>
     """, unsafe_allow_html=True)
@@ -338,14 +291,15 @@ if not st.session_state.logged_in:
     """, unsafe_allow_html=True)
     
     with st.form("login_form"):
-        username = st.text_input("Registration Number", placeholder="e.g. 21691A0...")
-        password = st.text_input("Password", type="password")
+        # Labels are hidden via CSS for cleaner glassmorphism look
+        username = st.text_input("Username", placeholder="Registration Number")
+        password = st.text_input("Password", placeholder="Password", type="password")
         
-        submitted = st.form_submit_button("Get Attendance")
+        submitted = st.form_submit_button("Sign In")
         
         if submitted:
             if not username or not password:
-                st.warning("Please enter both ID and Password")
+                st.warning("Please enter Credentials")
             else:
                 with st.spinner("Connecting to MITS Portal..."):
                     result = fetch_attendance(username, password)
