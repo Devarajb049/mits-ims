@@ -107,30 +107,32 @@ div[data-testid="stForm"] {
 }
 
 /* ===============================
-   BUTTON
+   LOGOUT BUTTON (SINGLE, RWD)
 ================================ */
-.stButton {
-    width: 100%;
-}
-
-.stButton > button {
-    background: #ffffff !important;
-    color: #0f172a !important;
-    border: none !important;
-    padding: 0.75rem;
+button[kind="secondary"][data-testid="baseButton-secondary"] {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #e5e7eb !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
     border-radius: 999px !important;
-    width: 100% !important;
-    font-weight: 700;
-    font-size: 1rem;
-    margin-top: 1rem;
-    transition: transform 0.1s ease, box-shadow 0.2s ease;
+    padding: 0.45rem 1rem !important;
+    font-size: 0.8rem !important;
+    font-weight: 600;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    backdrop-filter: blur(10px);
+    transition: all 0.2s ease;
+    z-index: 9999;
 }
 
-.stButton > button:hover {
-    background: #f1f5f9 !important;
+/* Hover */
+button[kind="secondary"][data-testid="baseButton-secondary"]:hover {
+    background: rgba(255, 255, 255, 0.18) !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 12px rgba(255,255,255,0.25);
     transform: translateY(-1px);
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
 }
+
 
 /* ===============================
    DASHBOARD CARDS
@@ -371,10 +373,10 @@ else:
     # Header (Logout Button Only)
     c_spacer, c_logout = st.columns([5, 1])
     with c_logout:
-        if st.button("Logout"):
-            st.session_state.logged_in = False
-            st.session_state.data = None
-            st.rerun()
+       if st.button("⏻ Logout", key="logout"):
+           st.session_state.logged_in = False
+           st.session_state.data = None
+           st.rerun()
 
     data = st.session_state.data
     
