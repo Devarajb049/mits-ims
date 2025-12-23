@@ -376,7 +376,7 @@ else:
 ''', unsafe_allow_html=True)
         
         # Grid for Subjects
-st.markdown("### 📘 Subject-wise Attendance")
+        st.markdown("### 📘 Subject-wise Attendance")
         
         for item in data:
             perc = item['percentage']
