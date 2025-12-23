@@ -14,155 +14,92 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Custom Styling to Match the User's Premium Dark Theme
-st.markdown("""
-    <style>
-    /* Premium Modern Dark Theme */
-    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
-
+    /* Global Reset & Theme */
     .stApp {
-        background: radial-gradient(circle at 50% 0%, #1e293b 0%, #020617 100%);
-        font-family: 'Outfit', sans-serif;
-        color: #f8fafc;
-    }
-
-    /* Hide Defaults & Anchor Links */
-    header[data-testid="stHeader"] { display: none; }
-    footer { display: none; }
-    #MainMenu { display: none; }
-    .stDeployButton { display: none; }
-    [data-testid="stToolbar"] { display: none; }
-    [data-testid="stDecoration"] { display: none; }
-    [data-testid="stStatusWidget"] { display: none; }
-    a.anchor-link { display: none !important; }
-    .css-15zrgzn { display: none; }
-
-    /* Layout & Scroll Fixes */
-    .block-container {
-        padding-top: 1rem !important;
-        padding-bottom: 0rem !important;
-        max-width: 100%;
-    }
-    
-    /* Global Styles - Deep Dark Blue Theme */
-    .stApp {
-        background: radial-gradient(circle at 50% 0%, #0f2e4a 0%, #020617 80%);
+        background: #020617; /* Deep Navy/Black base */
         font-family: 'Outfit', sans-serif;
         color: #e2e8f0;
         overflow-x: hidden;
     }
+    
+    /* Hide Defaults */
+    header[data-testid="stHeader"], footer, #MainMenu, .stDeployButton, 
+    [data-testid="stToolbar"], [data-testid="stDecoration"], 
+    [data-testid="stStatusWidget"], a.anchor-link, .css-15zrgzn { 
+        display: none !important; 
+    }
 
-    /* Fixed Width Card with Glow */
+    /* Layout */
+    .block-container {
+        padding-top: 1rem !important;
+        padding-bottom: 2rem !important;
+        max-width: 600px; /* Mobile-first width constraint */
+        margin: 0 auto;
+    }
+    
+    /* Login Card */
     div[data-testid="stForm"] {
         background: #0b1421;
         border: 1px solid #1e293b;
         border-radius: 1.5rem;
-        padding: 2.5rem;
-        box-shadow: 0 0 40px -10px rgba(56, 189, 248, 0.15); /* Blue Glow */
-        width: 100%;
+        padding: 2rem;
+        box-shadow: 0 0 50px -10px rgba(56, 189, 248, 0.1);
         max-width: 400px; 
         margin: 0 auto;
-        position: relative;
     }
     
-    /* Inputs */
-    .stTextInput > label {
-        color: #94a3b8 !important;
-        font-size: 0.85rem !important;
-        font-weight: 500;
-        margin-bottom: 0.4rem;
-    }
-    
-    .stTextInput > div > div {
-        background: #162032;
-        border: 1px solid #28354a;
-        border-radius: 0.75rem;
-        transition: all 0.2s ease;
-    }
-    
-    .stTextInput > div > div > input {
-        color: white;
-        padding: 0.8rem 1rem;
-        background-color: transparent !important;
-        border: none !important;
-    }
-
-    .stTextInput > div > div:focus-within {
-        border-color: #38bdf8;
-        box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
-        background: #1a253a;
-    }
-    
-    /* Primary Button - Bright Blue */
-    .stButton > button {
-        background: linear-gradient(90deg, #0ea5e9 0%, #2563eb 100%);
-        color: white;
-        border: none;
-        padding: 0.9rem;
-        border-radius: 0.75rem;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        text-transform: none; 
-        font-size: 1rem;
-        width: 100% !important;
-        box-shadow: 0 4px 15px -3px rgba(14, 165, 233, 0.4);
-        margin-top: 1.5rem;
-    }
-    .stButton > button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 25px -3px rgba(14, 165, 233, 0.5);
-    }
-    
-    /* Logo Container in Header */
-    .logo-container {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 1.5rem;
-    }
-    .logo-circle {
-        width: 60px;
-        height: 60px;
-        background: rgba(14, 165, 233, 0.1);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid rgba(14, 165, 233, 0.3);
-        box-shadow: 0 0 20px rgba(14, 165, 233, 0.2);
-    }
-
-    /* Footer */
-    .custom-footer {
-        text-align: center;
-        padding: 2rem 0;
-        color: #475569;
-        font-size: 0.75rem;
-        border-top: none;
-        margin-top: 2rem;
-        background: transparent;
-    }
-
-    /* Spacers */
-    .login-spacer { height: 8vh; display: flex; justify-content: center; }
-    @media (min-height: 800px) { .login-spacer { height: 12vh; } }
-    
-    /* Dashboard Colors & Cards */
-    .glass-card {
-        background: rgba(15, 23, 42, 0.6);
-        border: 1px solid rgba(255, 255, 255, 0.05);
+    /* Custom Card Style (Screenshot Match) */
+    .custom-card {
+        background: #0f172a; /* Dark Matte Navy */
         border-radius: 1rem;
-        padding: 1.5rem;
-        margin-bottom: 1rem;
-        border-left: 4px solid #334155;
+        padding: 1.25rem;
+        margin-bottom: 0.75rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid #1e293b;
     }
     
-    .border-green { border-left-color: #10b981 !important; background: rgba(16, 185, 129, 0.05); }
-    .border-yellow { border-left-color: #f59e0b !important; background: rgba(245, 158, 11, 0.05); }
-    .border-red { border-left-color: #ef4444 !important; background: rgba(239, 68, 68, 0.05); }
+    .percentage-display {
+        font-weight: 800;
+        font-size: 1.5rem;
+    }
     
+    /* Dashboard Aggregate */
+    .aggregate-card {
+        background: radial-gradient(circle at 50% 100%, #1e293b, #0f172a);
+        border: 1px solid #334155;
+        border-radius: 1.5rem;
+        padding: 2rem;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    /* Colors */
     .text-green { color: #34d399; }
     .text-yellow { color: #fbbf24; }
     .text-red { color: #f87171; }
+    
+    /* Input Styling */
+    .stTextInput > div > div {
+        background: #1e293b;
+        border: none;
+        border-radius: 0.75rem;
+    }
+    .stTextInput > div > div > input {
+        color: white;
+    }
+    
+    /* Button */
+    .stButton > button {
+        background: #3b82f6; 
+        color: white; 
+        border: none;
+        padding: 0.75rem;
+        border-radius: 0.75rem;
+        width: 100%;
+        font-weight: 600;
+    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -413,21 +350,17 @@ else:
                 border_cls = "border-red"
                 text_cls = "text-red"
                 
-            # Using single triple quotes and raw string formatting to avoid syntax issues
+            # Custom Card HTML matched to screenshot
             card_html = f'''
-            <div class="glass-card {border_cls}">
-                <div style="display: flex; justify-content: space-between; align-items: start;">
-                    <div>
-                        <h3 style="margin: 0; font-size: 1.1rem; font-weight: 600; color: white;">{item['code']}</h3>
-                        <div style="margin-top: 0.5rem; display: flex; align-items: center; gap: 0.75rem;">
-                            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Attended: <b style="color: white;">{item['attended']}</b></span>
-                            <span style="width: 4px; height: 4px; background: #475569; border-radius: 50%;"></span>
-                            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Total: <b style="color: white;">{item['total']}</b></span>
-                        </div>
+            <div class="custom-card">
+                <div>
+                    <div style="font-weight: 600; font-size: 1rem; color: #f1f5f9; margin-bottom: 0.25rem;">{item['code']}</div>
+                    <div style="font-size: 0.8rem; color: #64748b;">
+                        Attended: <span style="color: #94a3b8">{item['attended']}</span> / {item['total']}
                     </div>
-                    <div style="text-align: right;">
-                        <span style="font-size: 1.5rem; font-weight: 800; line-height: 1;" class="{text_cls}">{perc}%</span>
-                    </div>
+                </div>
+                <div class="percentage-display {text_cls}">
+                    {perc}%
                 </div>
             </div>
             '''
