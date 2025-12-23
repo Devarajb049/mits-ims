@@ -415,7 +415,8 @@ else:
                 border_cls = "border-red"
                 text_cls = "text-red"
                 
-            st.markdown(f"""
+            # Using single triple quotes and raw string formatting to avoid syntax issues
+            card_html = f'''
             <div class="glass-card {border_cls}">
                 <div style="display: flex; justify-content: space-between; align-items: start;">
                     <div>
@@ -431,7 +432,8 @@ else:
                     </div>
                 </div>
             </div>
-            """, unsafe_allow_html=True)
+            '''
+            st.markdown(card_html, unsafe_allow_html=True)
 
 # Footer (Always Visible)
 st.markdown('''
