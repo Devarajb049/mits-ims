@@ -25,12 +25,14 @@ st.markdown("""
         overflow-x: hidden;
     }
     
-    /* Hide Defaults */
+    /* Hide Defaults & Floating Elements */
     header[data-testid="stHeader"], footer, #MainMenu, .stDeployButton, 
     [data-testid="stToolbar"], [data-testid="stDecoration"], 
     [data-testid="stStatusWidget"], a.anchor-link, .css-15zrgzn, 
-    [data-testid="stFooter"] { 
+    [data-testid="stFooter"], [class*="viewerBadge"] { 
         display: none !important; 
+        visibility: hidden !important;
+        height: 0 !important;
     }
 
     /* Custom Scrollbar */
