@@ -77,6 +77,12 @@ st.markdown("""
     .text-red { color: #f87171; }
     
     /* GLASSMORPHISM INPUTS */
+    .stTextInput {
+        background: transparent !important;
+    }
+    .stTextInput > div {
+        background: transparent !important;
+    }
     .stTextInput > div > div {
         background: rgba(255, 255, 255, 0.1) !important;
         border: 1px solid rgba(255, 255, 255, 0.2) !important;
@@ -95,6 +101,7 @@ st.markdown("""
     /* Input Text */
     .stTextInput input {
         color: #ffffff !important;
+        background-color: transparent !important;
         padding-left: 1rem !important;
         font-weight: 500;
     }
