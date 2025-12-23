@@ -27,12 +27,30 @@ st.markdown("""
     }
 
     /* Hide Defaults & Anchor Links */
-    header[data-testid="stHeader"] { background: transparent; }
+    header[data-testid="stHeader"] { display: none; }
     footer { display: none; }
     #MainMenu { display: none; }
+    .stDeployButton { display: none; }
+    [data-testid="stToolbar"] { display: none; }
+    [data-testid="stDecoration"] { display: none; }
+    [data-testid="stStatusWidget"] { display: none; }
     a.anchor-link { display: none !important; }
     .css-15zrgzn { display: none; }
 
+    /* Layout & Scroll Fixes */
+    .block-container {
+        padding-top: 1rem !important;
+        padding-bottom: 0rem !important;
+        max-width: 100%;
+    }
+    
+    /* Global Styles */
+    .stApp {
+        background: radial-gradient(circle at 50% 0%, #1e293b 0%, #020617 100%);
+        font-family: 'Outfit', sans-serif;
+        color: #f8fafc;
+        overflow: hidden; /* Prevent scrolling */
+    }
     /* Fixed Width & Responsive Container */
     div[data-testid="stForm"] {
         background: #1e293b; /* Solid Obsidian */
@@ -84,13 +102,13 @@ st.markdown("""
         h1 { font-size: 2rem !important; }
     }
 
-    /* Helper for vertical centering */
+    /* Vertical Centering Adjustment */
     .login-spacer {
-        height: 10vh;
+        height: 5vh; /* Reduced to prevent scrolling on small screens */
         display: flex;
         justify-content: center;
     }
-    @media (min-height: 800px) {
+    @media (min-height: 700px) {
         .login-spacer { height: 15vh; }
     }
     </style>
