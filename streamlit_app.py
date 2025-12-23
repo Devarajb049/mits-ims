@@ -86,11 +86,19 @@ st.markdown("""
     /* Input Styling */
     .stTextInput > div > div {
         background: #1e293b;
-        border: none;
+        border: 1px solid #334155;
         border-radius: 0.75rem;
+        transition: border-color 0.2s;
     }
+    
+    .stTextInput > div > div:focus-within {
+        border-color: #38bdf8;
+        box-shadow: 0 0 0 1px #38bdf8;
+    }
+    
     .stTextInput > div > div > input {
         color: white;
+        background-color: transparent !important; /* Key: Transparent input to show parent bg */
     }
     
     /* Button */
@@ -366,27 +374,18 @@ else:
                 text_cls = "text-red"
                 bar_color = "#f87171"
                 
-            # Custom Card HTML with Progress Bar Graph
+            # Custom Card HTML (No Graph, explicitly showing counts)
             card_html = f'''
-            <div class="custom-card" style="flex-direction: column; align-items: stretch; gap: 0.75rem;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <div style="font-weight: 600; font-size: 1rem; color: #f1f5f9; margin-bottom: 0.25rem;">{item['code']}</div>
-                        <div style="font-size: 0.8rem; color: #94a3b8;">
-                            <span style="color: #cbd5e1; font-weight: 500;">{attended}</span> attended of {total}
-                        </div>
-                    </div>
-                    <div class="percentage-display {text_cls}">
-                        {perc}%
+            <div class="custom-card" style="align-items: center;">
+                <div style="flex: 1;">
+                    <div style="font-weight: 700; font-size: 1.1rem; color: white; margin-bottom: 0.4rem;">{item['code']}</div>
+                    <div style="display: flex; gap: 1rem; font-size: 0.85rem; color: #94a3b8;">
+                        <div>Attended: <b style="color: #cbd5e1;">{attended}</b></div>
+                        <div>Conducted: <b style="color: #cbd5e1;">{total}</b></div>
                     </div>
                 </div>
-                
-                <!-- Mini Bar Graph -->
-                <div style="width: 100%; display: flex; align-items: center; gap: 0.5rem;">
-                   <div style="flex-grow: 1; height: 6px; background: #334155; border-radius: 4px; overflow: hidden;">
-                       <div style="width: {graph_width}%; height: 100%; background-color: {bar_color}; border-radius: 4px;"></div>
-                   </div>
-                   <div style="font-size: 0.75rem; font-weight: 600; color: #64748b; min-width: 40px; text-align: right;">{int(graph_width)}%</div>
+                <div class="percentage-display {text_cls}" style="font-size: 1.75rem;">
+                    {perc}%
                 </div>
             </div>
             '''
