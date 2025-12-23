@@ -93,6 +93,7 @@ st.markdown("""
     
     /* Focus state */
     .stTextInput > div > div:focus-within {
+        border-radius: 50px !important; /* PILL SHAPE */
         background: rgba(255, 255, 255, 0.2) !important;
         border-color: rgba(255, 255, 255, 0.5) !important;
         box-shadow: 0 0 15px rgba(255,255,255,0.1) !important;
@@ -115,17 +116,22 @@ st.markdown("""
     }
     
     /* BUTTON */
+    .stButton {
+        width: 100%;
+    }
     .stButton > button {
         background: #ffffff !important; 
         color: #0f172a !important; 
         border: none;
         padding: 0.75rem;
         border-radius: 50px !important; /* PILL SHAPE */
-        width: 100%;
+        width: 100% !important;
+        display: block !important;
         font-weight: 700;
         font-size: 1rem;
         transition: transform 0.1s, box-shadow 0.2s;
         margin-top: 1rem;
+        text-align: center;
     }
     .stButton > button:hover {
         background: #f1f5f9 !important;
