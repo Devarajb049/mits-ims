@@ -15,136 +15,168 @@ st.set_page_config(
 # Custom Styling
 st.markdown("""
     <style>
-/* ===============================
-   DESIGN TOKENS
-================================ */
-:root {
-    --bg-main: radial-gradient(circle at 50% 10%, #2e3b4e, #020617);
-    --card-bg: #0f172a;
-    --border: #1e293b;
-
-    --green: #34d399;
-    --yellow: #fbbf24;
-    --red: #f87171;
-
-    --text-main: #e2e8f0;
-    --text-muted: #94a3b8;
-}
-
-/* ===============================
-   GLOBAL
+  /* ===============================
+   GLOBAL RESET & THEME
 ================================ */
 .stApp {
-    background: var(--bg-main);
+    background: radial-gradient(circle at 50% 10%, #2e3b4e, #020617);
     font-family: 'Outfit', sans-serif;
-    color: var(--text-main);
+    color: #e2e8f0;
+    overflow-x: hidden;
 }
 
-header, footer, #MainMenu,
+/* ===============================
+   HIDE STREAMLIT DEFAULT UI
+================================ */
+header[data-testid="stHeader"],
+footer,
+#MainMenu,
+.stDeployButton,
 [data-testid="stToolbar"],
 [data-testid="stDecoration"],
 [data-testid="stStatusWidget"],
+[data-testid="stFooter"],
+a.anchor-link,
 [class*="viewerBadge"] {
     display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
 }
 
 /* ===============================
-   LAYOUT
+   PAGE LAYOUT
 ================================ */
 .block-container {
-    max-width: 520px;
-    padding-top: 4.5rem !important;
-    padding-bottom: 3rem !important;
-    margin: auto;
+    padding-top: 5rem !important;
+    padding-bottom: 2rem !important;
+    max-width: 450px;
+    margin: 0 auto;
 }
 
 /* ===============================
-   INPUTS (TEXT + PASSWORD)
+   FORM CONTAINER
 ================================ */
+div[data-testid="stForm"] {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+/* ===============================
+   UNIFIED INPUT STYLE
+   (TEXT + PASSWORD)
+================================ */
+.stTextInput {
+    background: transparent !important;
+}
+
 .stTextInput div[data-baseweb="input"] {
-    background: rgba(255,255,255,0.12) !important;
-    border: 1px solid rgba(255,255,255,0.25) !important;
+    background: rgba(255, 255, 255, 0.12) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
     border-radius: 999px !important;
     backdrop-filter: blur(10px);
+    transition: all 0.25s ease;
 }
 
+/* FOCUS STATE */
 .stTextInput div[data-baseweb="input"]:focus-within {
-    border-color: var(--green) !important;
-    box-shadow: 0 0 0 2px rgba(52,211,153,.4);
+    background: rgba(255, 255, 255, 0.22) !important;
+    border-color: #fb7185 !important;
+    border-radius: 999px !important;
+    box-shadow: 0 0 0 1.5px rgba(251, 113, 133, 0.9);
 }
 
+/* INPUT FIELD */
 .stTextInput input {
     background: transparent !important;
-    color: white !important;
+    color: #ffffff !important;
     padding: 0.75rem 1rem !important;
+    font-weight: 500;
+    border: none !important;
 }
 
-.stTextInput label,
-.stTextInput button {
+/* PLACEHOLDER */
+.stTextInput input::placeholder {
+    color: #94a3b8 !important;
+}
+
+/* REMOVE LABEL GAP */
+.stTextInput label {
     display: none !important;
 }
 
 /* ===============================
-   PRIMARY BUTTON
+   LOGOUT BUTTON (SINGLE, RWD)
 ================================ */
-.stButton > button {
-    background: white !important;
-    color: #020617 !important;
+button[kind="secondary"][data-testid="baseButton-secondary"] {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #e5e7eb !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
     border-radius: 999px !important;
-    font-weight: 700;
-    padding: 0.75rem;
-    width: 100%;
-}
-
-/* ===============================
-   LOGOUT BUTTON (FIXED)
-================================ */
-button[kind="secondary"] {
+    padding: 0.45rem 1rem !important;
+    font-size: 0.8rem !important;
+    font-weight: 600;
     position: fixed;
     top: 1rem;
     right: 1rem;
-    background: rgba(255,255,255,.1) !important;
-    color: white !important;
-    border-radius: 999px !important;
-    padding: 0.4rem 0.9rem !important;
-    font-size: 0.8rem !important;
-    border: 1px solid rgba(255,255,255,.25) !important;
+    backdrop-filter: blur(10px);
+    transition: all 0.2s ease;
+    z-index: 9999;
 }
 
+/* Hover */
+button[kind="secondary"][data-testid="baseButton-secondary"]:hover {
+    background: rgba(255, 255, 255, 0.18) !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 12px rgba(255,255,255,0.25);
+    transform: translateY(-1px);
+}
+
+
 /* ===============================
-   DASHBOARD
+   DASHBOARD CARDS
 ================================ */
+.custom-card {
+    background: #0f172a;
+    border-radius: 1rem;
+    padding: 1.25rem;
+    margin-bottom: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #1e293b;
+}
+
 .aggregate-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
+    background: radial-gradient(circle at 50% 100%, #1e293b, #0f172a);
+    border: 1px solid #334155;
     border-radius: 1.5rem;
     padding: 2rem;
     text-align: center;
     margin-bottom: 2rem;
 }
 
-.custom-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 1rem;
-    padding: 1.25rem;
-    margin-bottom: 1rem;
-    display: flex;
-    justify-content: space-between;
+.percentage-display {
+    font-weight: 800;
+    font-size: 1.75rem;
 }
 
-.text-green { color: var(--green); }
-.text-yellow { color: var(--yellow); }
-.text-red { color: var(--red); }
+/* ===============================
+   TEXT COLORS
+================================ */
+.text-green { color: #34d399; }
+.text-yellow { color: #fbbf24; }
+.text-red { color: #f87171; }
 
 /* ===============================
    FOOTER
 ================================ */
 .custom-footer {
-    margin-top: 3rem;
     text-align: center;
-    color: var(--text-muted);
-    font-size: 0.75rem;
+    margin: 2rem auto;
+    color: #64748b;
+    font-size: 0.8rem;
 }
 
     </style>
@@ -376,7 +408,7 @@ else:
 ''', unsafe_allow_html=True)
         
         # Grid for Subjects
-        st.markdown("### 📘 Subject-wise Attendance")
+        st.subheader("Subject Detailed Report")
         
         for item in data:
             perc = item['percentage']
