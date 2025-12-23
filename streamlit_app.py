@@ -144,6 +144,9 @@ def fetch_attendance(username, password):
                     browser.close()
                     return {"error": err_text}
             
+            # Custom wait to ensure table loads
+            time.sleep(4)
+
             # Check Login Success
             if "dashboard" not in page.url.lower() and not page.query_selector("#studentName"):
                  browser.close()
@@ -211,7 +214,12 @@ def fetch_attendance(username, password):
                         pass
             
             browser.close()
-            return {"success": True, "name": student_name, "data": attendance_data}
+            return {
+                "success": True, 
+                "name": student_name, 
+                "data": attendance_data, 
+                "debug_text": full_text[:2000] if not attendance_data else ""
+            }
             
         except Exception as e:
             return {"error": f"Connection Error: {str(e)}"}
@@ -251,6 +259,7 @@ if not st.session_state.logged_in:
                     st.session_state.logged_in = True
                     st.session_state.data = result['data']
                     st.session_state.user_name = result['name']
+                    st.session_state.debug_text = result.get('debug_text', "")
                     st.rerun()
 
 # Dashboard Screen
@@ -268,7 +277,10 @@ else:
     data = st.session_state.data
     
     if not data:
-        st.info("No attendance data found.")
+        st.info("No attendance data found. The page might not have loaded correctly.")
+        if st.session_state.get('debug_text'):
+            with st.expander("Show Debug Info (Send this to developer)"):
+                st.code(st.session_state.debug_text)
     else:
         # Statistics
         total_attended = sum(d['attended'] for d in data)
