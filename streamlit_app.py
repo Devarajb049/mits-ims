@@ -19,76 +19,91 @@ st.markdown("""
     <style>
     /* Global Styles */
     .stApp {
-        background-color: #020617;
-        color: white;
-        font-family: 'Outfit', sans-serif;
+        background-color: #0f172a;
+        color: #f8fafc;
+        font-family: 'Inter', sans-serif;
     }
     
+    /* Hide Streamlit Anchor Links */
+    a.anchor-link { display: none !important; }
+    .css-15zrgzn { display: none; }
+    [data-testid="stHeader"] { background-color: rgba(0,0,0,0); }
+    
     /* Login Box Styling */
-    .css-1544g2n {
-        background-color: rgba(255, 255, 255, 0.03);
+    div[data-testid="stForm"] {
+        background-color: #1e293b;
         padding: 2rem;
-        border-radius: 1.5rem;
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(10px);
+        border-radius: 1rem;
+        border: 1px solid #334155;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     }
     
     /* Input Fields */
     .stTextInput > div > div > input {
-        background-color: rgba(59, 130, 246, 0.05); /* Blue tint */
-        color: white;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 0.75rem;
+        background-color: #334155;
+        color: #f8fafc;
+        border: 1px solid #475569;
+        border-radius: 0.5rem;
+    }
+    .stTextInput > div > div > input:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
     }
     
     /* Button */
     .stButton > button {
-        background-color: #2563eb;
+        background-color: #3b82f6;
         color: white;
-        border-radius: 0.75rem;
+        border-radius: 0.5rem;
         width: 100%;
         border: none;
         padding: 0.75rem;
-        font-weight: 600;
+        font-weight: 500;
         transition: all 0.2s;
     }
     .stButton > button:hover {
-        background-color: #1d4ed8;
-        transform: scale(1.02);
-    }
-    
-    /* Metrics */
-    div[data-testid="stMetricValue"] {
-        font-size: 2rem;
-        font-weight: 700;
+        background-color: #2563eb;
     }
     
     /* Custom Card for Subject */
     .subject-card {
-        background-color: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 1rem;
-        padding: 1.5rem;
-        margin-bottom: 1rem;
-        border-left: 4px solid #3b82f6; /* Default Blue */
-        transition: background-color 0.2s;
+        background-color: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 0.75rem;
+        padding: 1.25rem;
+        margin-bottom: 0.75rem;
+        border-left: 4px solid #3b82f6;
+        transition: transform 0.2s, box-shadow 0.2s;
     }
     .subject-card:hover {
-        background-color: rgba(255, 255, 255, 0.08);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        border-color: #475569;
     }
+    
     .status-green { border-left-color: #10b981; }
     .status-yellow { border-left-color: #f59e0b; }
     .status-red { border-left-color: #ef4444; }
     
     .percentage-text {
-        font-size: 1.5rem;
-        font-weight: bold;
+        font-size: 1.25rem;
+        font-weight: 600;
         float: right;
     }
     .green-text { color: #34d399; }
     .yellow-text { color: #fbbf24; }
     .red-text { color: #f87171; }
     
+    /* Aggregate Card */
+    .aggregate-card {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        border: 1px solid #334155;
+        border-radius: 1rem;
+        padding: 2rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -291,11 +306,11 @@ else:
         color = "green" if overall >= 75 else "yellow" if overall >= 65 else "red"
         
         st.markdown(f"""
-        <div style="background: rgba(255,255,255,0.05); border-radius: 20px; padding: 20px; text-align: center; margin-bottom: 30px;">
-            <p style="color: #94a3b8; letter-spacing: 2px;">AGGREGATE PERCENTAGE</p>
-            <h1 style="font-size: 4rem; color: {'#34d399' if overall >= 75 else '#fbbf24' if overall >= 65 else '#f87171'}; margin: 0;">{overall:.2f}%</h1>
-            <p style="color: #cbd5e1; margin-top: 10px;">
-                Classes: <b style="color:white">{total_attended}</b> / <b style="color:white">{total_conducted}</b>
+        <div class="aggregate-card">
+            <p style="color: #94a3b8; font-size: 0.875rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">Aggregate Percentage</p>
+            <h1 style="font-size: 3.5rem; font-weight: 700; color: {'#34d399' if overall >= 75 else '#fbbf24' if overall >= 65 else '#f87171'}; margin: 0; line-height: 1;">{overall:.2f}%</h1>
+             <p style="color: #64748b; margin-top: 1rem; font-size: 0.875rem;">
+                Classes Attended: <b style="color: #f1f5f9">{total_attended}</b> / <span style="color: #94a3b8">{total_conducted}</span>
             </p>
         </div>
         """, unsafe_allow_html=True)
