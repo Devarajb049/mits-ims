@@ -17,92 +17,161 @@ st.set_page_config(
 # Custom Styling to Match the User's Premium Dark Theme
 st.markdown("""
     <style>
-    /* Global Styles */
+    /* Premium Modern Dark Theme */
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
     .stApp {
-        background-color: #0f172a;
+        background: radial-gradient(circle at 50% 0%, #1e293b 0%, #020617 100%);
+        font-family: 'Outfit', sans-serif;
         color: #f8fafc;
-        font-family: 'Inter', sans-serif;
     }
-    
-    /* Hide Streamlit Anchor Links */
+
+    /* Hide Defaults & Anchor Links */
+    header[data-testid="stHeader"] { background: transparent; }
+    footer { display: none; }
+    #MainMenu { display: none; }
     a.anchor-link { display: none !important; }
     .css-15zrgzn { display: none; }
-    [data-testid="stHeader"] { background-color: rgba(0,0,0,0); }
-    
-    /* Login Box Styling */
+
+    /* Login Card & Form container */
     div[data-testid="stForm"] {
-        background-color: #1e293b;
-        padding: 2rem;
-        border-radius: 1rem;
-        border: 1px solid #334155;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        background: rgba(30, 41, 59, 0.4);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 1.5rem;
+        padding: 3rem 2rem;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     }
-    
-    /* Input Fields */
+
+    /* Inputs */
     .stTextInput > div > div > input {
-        background-color: #334155;
-        color: #f8fafc;
-        border: 1px solid #475569;
-        border-radius: 0.5rem;
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        color: #e2e8f0;
+        border-radius: 0.75rem;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        transition: all 0.3s ease;
     }
     .stTextInput > div > div > input:focus {
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+        border-color: #38bdf8;
+        box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.1);
+        background: rgba(15, 23, 42, 0.8);
     }
     
-    /* Button */
+    /* Primary Button */
     .stButton > button {
-        background-color: #3b82f6;
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
         color: white;
-        border-radius: 0.5rem;
-        width: 100%;
         border: none;
-        padding: 0.75rem;
-        font-weight: 500;
-        transition: all 0.2s;
+        padding: 0.85rem 1.5rem;
+        border-radius: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        width: 100% !important;
+        box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.3);
+        margin-top: 1rem;
     }
     .stButton > button:hover {
-        background-color: #2563eb;
-    }
-    
-    /* Custom Card for Subject */
-    .subject-card {
-        background-color: #1e293b;
-        border: 1px solid #334155;
-        border-radius: 0.75rem;
-        padding: 1.25rem;
-        margin-bottom: 0.75rem;
-        border-left: 4px solid #3b82f6;
-        transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .subject-card:hover {
         transform: translateY(-2px);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        border-color: #475569;
+        box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.4);
+        background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
     }
-    
-    .status-green { border-left-color: #10b981; }
-    .status-yellow { border-left-color: #f59e0b; }
-    .status-red { border-left-color: #ef4444; }
-    
-    .percentage-text {
-        font-size: 1.25rem;
-        font-weight: 600;
-        float: right;
+
+    /* Dashboard Cards */
+    .glass-card {
+        background: rgba(30, 41, 59, 0.3);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 1rem;
+        padding: 1.5rem;
+        transition: all 0.2s ease;
+        margin-bottom: 1rem;
+        border-left: 4px solid #334155;
     }
-    .green-text { color: #34d399; }
-    .yellow-text { color: #fbbf24; }
-    .red-text { color: #f87171; }
+    .glass-card:hover {
+        background: rgba(30, 41, 59, 0.5);
+        transform: translateX(5px);
+    }
     
     /* Aggregate Card */
     .aggregate-card {
-        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-        border: 1px solid #334155;
-        border-radius: 1rem;
-        padding: 2rem;
+        background: linear-gradient(180deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1.5rem;
+        padding: 2.5rem;
         text-align: center;
-        margin-bottom: 2rem;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2.5rem;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Helper Classes */
+    .text-xs { font-size: 0.75rem; }
+    .text-sm { font-size: 0.875rem; }
+    .font-bold { font-weight: 700; }
+    .uppercase { text-transform: uppercase; }
+    .tracking-wider { letter-spacing: 0.05em; }
+    
+    .border-green { border-left-color: #34d399; }
+    .border-yellow { border-left-color: #fbbf24; }
+    .border-red { border-left-color: #f87171; }
+    
+    .text-green { color: #34d399; }
+    .text-yellow { color: #fbbf24; }
+    .text-red { color: #f87171; }
+    .text-slate-400 { color: #94a3b8; }
+    
+    /* Footer */
+    .custom-footer {
+        text-align: center;
+        padding: 3rem 0;
+        color: #64748b;
+        font-size: 0.8rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        margin-top: 4rem;
+        background: radial-gradient(circle at 50% 0%, rgba(30, 41, 59, 0.3), transparent 70%);
+    }
+    .custom-footer p { margin-bottom: 0.5rem; }
+    .footer-link {
+        color: #94a3b8;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .footer-link:hover {
+        color: #38bdf8;
+    }
+
+    /* RWD & Centering */
+    @media (max-width: 640px) {
+        div[data-testid="stForm"] {
+            padding: 1.5rem 1rem;
+        }
+        .stApp {
+            background: #020617; /* Solid bg for performance on mobile */
+        }
+        h1 { font-size: 2rem !important; }
+        .glass-card {
+            padding: 1rem;
+        }
+        .percentage-text {
+            font-size: 1.2rem;
+        }
+    }
+
+    /* Vertical Centering Helper */
+    .login-spacer {
+        height: 10vh;
+    }
+    @media (min-height: 800px) {
+        .login-spacer { height: 15vh; }
     }
     </style>
     """, unsafe_allow_html=True)
@@ -252,8 +321,13 @@ if 'user_name' not in st.session_state:
 
 # Login Screen
 if not st.session_state.logged_in:
-    st.title("MITS IMS Portal")
-    st.markdown("<p style='color: #94a3b8;'>Secure Attendance Access</p>", unsafe_allow_html=True)
+    st.markdown('<div class="login-spacer"></div>', unsafe_allow_html=True)
+    st.markdown("""
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <h1 style="font-weight: 800; font-size: 3.5rem; background: linear-gradient(to right, #60a5fa, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem; letter-spacing: -1px;">MITS IMS</h1>
+            <p style="color: #94a3b8; font-size: 1.1rem; font-weight: 300;">Secure Attendance Portal</p>
+        </div>
+    """, unsafe_allow_html=True)
     
     with st.form("login_form"):
         username = st.text_input("Registration Number", placeholder="e.g. 21691A0...")
@@ -320,29 +394,48 @@ else:
         
         for item in data:
             perc = item['percentage']
-            status_class = "status-green"
-            text_class = "green-text"
+            
+            border_cls = "border-green"
+            text_cls = "text-green"
             
             if perc < 75:
-                status_class = "status-yellow"
-                text_class = "yellow-text"
+                border_cls = "border-yellow"
+                text_cls = "text-yellow"
             if perc < 65:
-                status_class = "status-red"
-                text_class = "red-text"
+                border_cls = "border-red"
+                text_cls = "text-red"
                 
             st.markdown(f"""
-            <div class="subject-card {status_class}">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="glass-card {border_cls}">
+                <div style="display: flex; justify-content: space-between; align-items: start;">
                     <div>
-                        <h3 style="margin: 0; font-size: 1.1rem; color: white;">{item['code']}</h3>
-                        <p style="margin: 5px 0 0 0; font-size: 0.9rem; color: #94a3b8;">
-                            Attended: <b style="color: white;">{item['attended']}</b> / {item['total']}
-                        </p>
+                        <h3 style="margin: 0; font-size: 1.1rem; font-weight: 600; color: white;">{item['code']}</h3>
+                        <div style="margin-top: 0.5rem; display: flex; align-items: center; gap: 0.75rem;">
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Attended: <b style="color: white;">{item['attended']}</b></span>
+                            <span style="width: 4px; height: 4px; background: #475569; border-radius: 50%;"></span>
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Total: <b style="color: white;">{item['total']}</b></span>
+                        </div>
                     </div>
-                    <div>
-                        <span class="percentage-text {text_class}">{perc}%</span>
+                    <div style="text-align: right;">
+                        <span style="font-size: 1.5rem; font-weight: 800; line-height: 1;" class="{text_cls}">{perc}%</span>
                     </div>
                 </div>
             </div>
             """, unsafe_allow_html=True)
+
+# Footer (Always Visible)
+st.markdown("""
+<div class="custom-footer">
+    <p>&copy; 2025 MITS IMS. All Rights Reserved.</p>
+    <p>
+        Developed by 
+        <a href="https://github.com/" target="_blank" class="footer-link">
+            Bhojanapu Deva Raj
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+        </a>
+    </p>
+</div>
+""", unsafe_allow_html=True)
 
