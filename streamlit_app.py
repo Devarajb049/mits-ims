@@ -14,6 +14,9 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+# Custom Styling
+st.markdown("""
+    <style>
     /* Global Reset & Theme */
     .stApp {
         background: #020617; /* Deep Navy/Black base */
