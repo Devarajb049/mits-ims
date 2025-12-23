@@ -263,7 +263,7 @@ if not st.session_state.logged_in:
                     </svg>
                 </div>
             </div>
-            <h1 style="font-weight: 800; font-size: 1.8rem; color: white; margin-bottom: 0.5rem; letter-spacing: 0.5px; text-transform: uppercase;">SCHOOL PORTAL</h1>
+            <h1 style="font-weight: 800; font-size: 1.8rem; color: white; margin-bottom: 0.5rem; letter-spacing: 0.5px; text-transform: uppercase;">MITS IMS</h1>
             <p style="color: #64748b; font-size: 0.9rem; font-weight: 400;">Secure Login for Students & Faculty</p>
         </div>
     """, unsafe_allow_html=True)
@@ -383,10 +383,10 @@ else:
                 
                 <!-- Mini Bar Graph -->
                 <div style="width: 100%; display: flex; align-items: center; gap: 0.5rem;">
-                   <div style="flex-grow: 1; height: 6px; background: #1e293b; border-radius: 4px; overflow: hidden; border: 1px solid #334155;">
-                       <div style="width: {graph_width}%; height: 100%; background: {bar_color}; border-radius: 4px;"></div>
+                   <div style="flex-grow: 1; height: 6px; background: #334155; border-radius: 4px; overflow: hidden;">
+                       <div style="width: {graph_width}%; height: 100%; background-color: {bar_color}; border-radius: 4px;"></div>
                    </div>
-                   <div style="font-size: 0.7rem; color: #64748b; min-width: 40px; text-align: right;">{int(graph_width)}%</div>
+                   <div style="font-size: 0.75rem; font-weight: 600; color: #64748b; min-width: 40px; text-align: right;">{int(graph_width)}%</div>
                 </div>
             </div>
             '''
