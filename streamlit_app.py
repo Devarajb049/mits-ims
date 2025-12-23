@@ -119,6 +119,7 @@ button[kind="secondary"][data-testid="baseButton-secondary"] {
     font-weight: 600;
     position: fixed;
     top: 1rem;
+    width: 100px !important;
     right: 1rem;
     backdrop-filter: blur(10px);
     transition: all 0.2s ease;
@@ -129,6 +130,7 @@ button[kind="secondary"][data-testid="baseButton-secondary"] {
 button[kind="secondary"][data-testid="baseButton-secondary"]:hover {
     background: rgba(255, 255, 255, 0.18) !important;
     color: #ffffff !important;
+    width: 100px !important;
     box-shadow: 0 0 12px rgba(255,255,255,0.25);
     transform: translateY(-1px);
 }
@@ -373,7 +375,7 @@ else:
     # Header (Logout Button Only)
     c_spacer, c_logout = st.columns([5, 1])
     with c_logout:
-       if st.button("Logout", key="logout"):
+       if st.button("⏻ Logout", key="logout"):
            st.session_state.logged_in = False
            st.session_state.data = None
            st.rerun()
