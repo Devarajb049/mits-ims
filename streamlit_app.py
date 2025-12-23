@@ -327,8 +327,6 @@ if not st.session_state.logged_in:
             <p style="color: #64748b; font-size: 0.9rem; font-weight: 400;">Secure Login for Students & Faculty</p>
         </div>
     """, unsafe_allow_html=True)
-
-    """, unsafe_allow_html=True)
     
     with st.form("login_form"):
         username = st.text_input("Registration Number", placeholder="e.g. 21691A0...")
