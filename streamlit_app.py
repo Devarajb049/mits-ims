@@ -102,33 +102,78 @@ st.markdown("""
     .text-yellow { color: #fbbf24; }
     .text-red { color: #f87171; }
     
-    /* Input Styling */
+    /* PRECISE INPUT STYLING FOR PASSWORD FIELD */
+    /* Target the input wrapper */
     .stTextInput > div > div {
-        background: #1e293b;
-        border: 1px solid #334155;
-        border-radius: 0.75rem;
-        transition: border-color 0.2s;
+        background: #1a1a2e !important; /* Very dark blue-grey/black */
+        border: 1px solid #2d3748 !important; /* Subtle border */
+        border-radius: 0.75rem !important;
+        transition: all 0.2s ease-in-out;
+        box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.2) !important; /* Inner shadow for depth */
+        padding-right: 2.5rem; /* Space for eye icon if needed, though streamlit usually handles it */
     }
     
+    /* Focus state */
     .stTextInput > div > div:focus-within {
-        border-color: #38bdf8;
-        box-shadow: 0 0 0 1px #38bdf8;
+        border-color: #38bdf8 !important;
+        box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2), inset 0 2px 4px 0 rgba(0, 0, 0, 0.2) !important;
+        background: #1e293b !important; /* Slightly lighter on focus */
     }
     
-    .stTextInput > div > div > input {
-        color: white;
-        background-color: transparent !important; /* Key: Transparent input to show parent bg */
+    /* The Input Element itself */
+    .stTextInput input {
+        color: #f1f5f9 !important; /* Bright white text */
+        background-color: transparent !important;
+        font-family: 'Outfit', sans-serif !important;
+        font-weight: 500;
+        letter-spacing: 0.05em; /* Spacing for password dots */
+        padding-left: 0.5rem;
+    }
+
+    /* Placeholder Text */
+    .stTextInput input::placeholder {
+        color: #64748b !important;
+        opacity: 1;
+        letter-spacing: normal;
+    }
+
+    /* Eye Icon Visibility (if accessible) */
+    /* Attempting to target the SVG icon inside the input */
+    .stTextInput button[aria-label="Show password"] {
+         color: #94a3b8 !important;
+    }
+    .stTextInput button[aria-label="Show password"]:hover {
+         color: #f1f5f9 !important;
+    }
+
+    /* Label Styling */
+    .stTextInput label {
+        color: #94a3b8 !important;
+        font-size: 0.85rem !important;
+        font-weight: 500 !important;
+        margin-bottom: 0.4rem !important;
     }
     
     /* Button */
     .stButton > button {
         background: #3b82f6; 
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
         color: white; 
         border: none;
         padding: 0.75rem;
         border-radius: 0.75rem;
         width: 100%;
         font-weight: 600;
+        font-size: 1rem;
+        transition: transform 0.1s, box-shadow 0.2s;
+        box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
+    }
+    .stButton > button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 12px -2px rgba(59, 130, 246, 0.4);
+    }
+    .stButton > button:active {
+        transform: translateY(0);
     }
     </style>
     """, unsafe_allow_html=True)
