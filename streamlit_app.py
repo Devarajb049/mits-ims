@@ -350,17 +350,33 @@ else:
                 border_cls = "border-red"
                 text_cls = "text-red"
                 
-            # Custom Card HTML matched to screenshot
+            # Custom Card HTML with Progress Bar Graph
+            # Calculate width for the progress bar relative to total (max scale, but here just percentage bar)
+            # Actually user wants Attended vs Conducted graph. 
+            # Simple linear visual: [ ======= (Attended) ... (Total - Attended) ]
+            
+            bar_color = "#34d399" if perc >= 75 else "#fbbf24" if perc >= 65 else "#f87171"
+            
             card_html = f'''
-            <div class="custom-card">
-                <div>
-                    <div style="font-weight: 600; font-size: 1rem; color: #f1f5f9; margin-bottom: 0.25rem;">{item['code']}</div>
-                    <div style="font-size: 0.8rem; color: #64748b;">
-                        Attended: <span style="color: #94a3b8">{item['attended']}</span> / {item['total']}
+            <div class="custom-card" style="flex-direction: column; align-items: stretch; gap: 0.75rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="font-weight: 600; font-size: 1rem; color: #f1f5f9; margin-bottom: 0.25rem;">{item['code']}</div>
+                        <div style="font-size: 0.8rem; color: #94a3b8;">
+                            <span style="color: #cbd5e1; font-weight: 500;">{item['attended']}</span> attended of {item['total']}
+                        </div>
+                    </div>
+                    <div class="percentage-display {text_cls}">
+                        {perc}%
                     </div>
                 </div>
-                <div class="percentage-display {text_cls}">
-                    {perc}%
+                
+                <!-- Mini Bar Graph -->
+                <div style="width: 100%; display: flex; align-items: center; gap: 0.5rem;">
+                   <div style="flex-grow: 1; height: 6px; background: #1e293b; border-radius: 4px; overflow: hidden;">
+                       <div style="width: {perc}%; height: 100%; background: {bar_color}; border-radius: 4px;"></div>
+                   </div>
+                   <div style="font-size: 0.7rem; color: #64748b; min-width: 30px; text-align: right;"></div>
                 </div>
             </div>
             '''
