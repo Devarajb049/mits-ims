@@ -373,7 +373,7 @@ else:
     # Header (Logout Button Only)
     c_spacer, c_logout = st.columns([5, 1])
     with c_logout:
-       if st.button("⏻ Logout", key="logout"):
+       if st.button("Logout", key="logout"):
            st.session_state.logged_in = False
            st.session_state.data = None
            st.rerun()
