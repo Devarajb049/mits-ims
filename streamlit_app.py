@@ -28,8 +28,25 @@ st.markdown("""
     /* Hide Defaults */
     header[data-testid="stHeader"], footer, #MainMenu, .stDeployButton, 
     [data-testid="stToolbar"], [data-testid="stDecoration"], 
-    [data-testid="stStatusWidget"], a.anchor-link, .css-15zrgzn { 
+    [data-testid="stStatusWidget"], a.anchor-link, .css-15zrgzn, 
+    [data-testid="stFooter"] { 
         display: none !important; 
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #020617; 
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #334155; 
+        border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #475569; 
     }
 
     /* Layout */
@@ -301,13 +318,9 @@ if not st.session_state.logged_in:
 # Dashboard Screen
 else:
     # Header
-    col1, col2 = st.columns([3, 1])
-    with col1:
-        if st.session_state.user_name:
-            st.title(f"Welcome, {st.session_state.user_name}")
-        else:
-            st.title("Welcome")
-    with col2:
+    # Header (Logout Button Only)
+    c_spacer, c_logout = st.columns([5, 1])
+    with c_logout:
         if st.button("Logout"):
             st.session_state.logged_in = False
             st.session_state.data = None
