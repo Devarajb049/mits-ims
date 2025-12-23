@@ -15,168 +15,136 @@ st.set_page_config(
 # Custom Styling
 st.markdown("""
     <style>
-  /* ===============================
-   GLOBAL RESET & THEME
+/* ===============================
+   DESIGN TOKENS
 ================================ */
-.stApp {
-    background: radial-gradient(circle at 50% 10%, #2e3b4e, #020617);
-    font-family: 'Outfit', sans-serif;
-    color: #e2e8f0;
-    overflow-x: hidden;
+:root {
+    --bg-main: radial-gradient(circle at 50% 10%, #2e3b4e, #020617);
+    --card-bg: #0f172a;
+    --border: #1e293b;
+
+    --green: #34d399;
+    --yellow: #fbbf24;
+    --red: #f87171;
+
+    --text-main: #e2e8f0;
+    --text-muted: #94a3b8;
 }
 
 /* ===============================
-   HIDE STREAMLIT DEFAULT UI
+   GLOBAL
 ================================ */
-header[data-testid="stHeader"],
-footer,
-#MainMenu,
-.stDeployButton,
+.stApp {
+    background: var(--bg-main);
+    font-family: 'Outfit', sans-serif;
+    color: var(--text-main);
+}
+
+header, footer, #MainMenu,
 [data-testid="stToolbar"],
 [data-testid="stDecoration"],
 [data-testid="stStatusWidget"],
-[data-testid="stFooter"],
-a.anchor-link,
 [class*="viewerBadge"] {
     display: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
 }
 
 /* ===============================
-   PAGE LAYOUT
+   LAYOUT
 ================================ */
 .block-container {
-    padding-top: 5rem !important;
-    padding-bottom: 2rem !important;
-    max-width: 450px;
-    margin: 0 auto;
+    max-width: 520px;
+    padding-top: 4.5rem !important;
+    padding-bottom: 3rem !important;
+    margin: auto;
 }
 
 /* ===============================
-   FORM CONTAINER
+   INPUTS (TEXT + PASSWORD)
 ================================ */
-div[data-testid="stForm"] {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-}
-
-/* ===============================
-   UNIFIED INPUT STYLE
-   (TEXT + PASSWORD)
-================================ */
-.stTextInput {
-    background: transparent !important;
-}
-
 .stTextInput div[data-baseweb="input"] {
-    background: rgba(255, 255, 255, 0.12) !important;
-    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    background: rgba(255,255,255,0.12) !important;
+    border: 1px solid rgba(255,255,255,0.25) !important;
     border-radius: 999px !important;
     backdrop-filter: blur(10px);
-    transition: all 0.25s ease;
 }
 
-/* FOCUS STATE */
 .stTextInput div[data-baseweb="input"]:focus-within {
-    background: rgba(255, 255, 255, 0.22) !important;
-    border-color: #fb7185 !important;
-    border-radius: 999px !important;
-    box-shadow: 0 0 0 1.5px rgba(251, 113, 133, 0.9);
+    border-color: var(--green) !important;
+    box-shadow: 0 0 0 2px rgba(52,211,153,.4);
 }
 
-/* INPUT FIELD */
 .stTextInput input {
     background: transparent !important;
-    color: #ffffff !important;
+    color: white !important;
     padding: 0.75rem 1rem !important;
-    font-weight: 500;
-    border: none !important;
 }
 
-/* PLACEHOLDER */
-.stTextInput input::placeholder {
-    color: #94a3b8 !important;
-}
-
-/* REMOVE LABEL GAP */
-.stTextInput label {
+.stTextInput label,
+.stTextInput button {
     display: none !important;
 }
 
 /* ===============================
-   LOGOUT BUTTON (SINGLE, RWD)
+   PRIMARY BUTTON
 ================================ */
-button[kind="secondary"][data-testid="baseButton-secondary"] {
-    background: rgba(255, 255, 255, 0.08) !important;
-    color: #e5e7eb !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+.stButton > button {
+    background: white !important;
+    color: #020617 !important;
     border-radius: 999px !important;
-    padding: 0.45rem 1rem !important;
-    font-size: 0.8rem !important;
-    font-weight: 600;
+    font-weight: 700;
+    padding: 0.75rem;
+    width: 100%;
+}
+
+/* ===============================
+   LOGOUT BUTTON (FIXED)
+================================ */
+button[kind="secondary"] {
     position: fixed;
     top: 1rem;
     right: 1rem;
-    backdrop-filter: blur(10px);
-    transition: all 0.2s ease;
-    z-index: 9999;
+    background: rgba(255,255,255,.1) !important;
+    color: white !important;
+    border-radius: 999px !important;
+    padding: 0.4rem 0.9rem !important;
+    font-size: 0.8rem !important;
+    border: 1px solid rgba(255,255,255,.25) !important;
 }
-
-/* Hover */
-button[kind="secondary"][data-testid="baseButton-secondary"]:hover {
-    background: rgba(255, 255, 255, 0.18) !important;
-    color: #ffffff !important;
-    box-shadow: 0 0 12px rgba(255,255,255,0.25);
-    transform: translateY(-1px);
-}
-
 
 /* ===============================
-   DASHBOARD CARDS
+   DASHBOARD
 ================================ */
-.custom-card {
-    background: #0f172a;
-    border-radius: 1rem;
-    padding: 1.25rem;
-    margin-bottom: 0.75rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid #1e293b;
-}
-
 .aggregate-card {
-    background: radial-gradient(circle at 50% 100%, #1e293b, #0f172a);
-    border: 1px solid #334155;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
     border-radius: 1.5rem;
     padding: 2rem;
     text-align: center;
     margin-bottom: 2rem;
 }
 
-.percentage-display {
-    font-weight: 800;
-    font-size: 1.75rem;
+.custom-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
 }
 
-/* ===============================
-   TEXT COLORS
-================================ */
-.text-green { color: #34d399; }
-.text-yellow { color: #fbbf24; }
-.text-red { color: #f87171; }
+.text-green { color: var(--green); }
+.text-yellow { color: var(--yellow); }
+.text-red { color: var(--red); }
 
 /* ===============================
    FOOTER
 ================================ */
 .custom-footer {
+    margin-top: 3rem;
     text-align: center;
-    margin: 2rem auto;
-    color: #64748b;
-    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-size: 0.75rem;
 }
 
     </style>
@@ -371,7 +339,6 @@ if not st.session_state.logged_in:
 else:
     # Header
     # Header (Logout Button Only)
-    c_spacer, c_logout = st.columns([5, 1])
     with c_logout:
        if st.button("⏻ Logout", key="logout"):
            st.session_state.logged_in = False
@@ -409,7 +376,7 @@ else:
 ''', unsafe_allow_html=True)
         
         # Grid for Subjects
-        st.subheader("Subject Detailed Report")
+st.markdown("### 📘 Subject-wise Attendance")
         
         for item in data:
             perc = item['percentage']
