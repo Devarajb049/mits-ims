@@ -434,11 +434,11 @@ else:
             """, unsafe_allow_html=True)
 
 # Footer (Always Visible)
-st.markdown("""
+st.markdown('''
 <div class="custom-footer">
     <p>&copy; 2025 MITS IMS. All Rights Reserved.</p>
 </div>
-""", unsafe_allow_html=True)
+''', unsafe_allow_html=True)
 
-
-# Final syntax check pass
+# End of file marker
+pass
