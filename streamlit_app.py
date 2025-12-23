@@ -272,7 +272,7 @@ if not st.session_state.logged_in:
                 </div>
             </div>
             <h1 style="font-weight: 800; font-size: 1.8rem; color: white; margin-bottom: 0.5rem; letter-spacing: 0.5px; text-transform: uppercase;">MITS IMS</h1>
-            <p style="color: #64748b; font-size: 0.9rem; font-weight: 400;">Secure Login for Students & Faculty</p>
+            <p style="color: #64748b; font-size: 0.9rem; font-weight: 400;">Secure Login for Students</p>
         </div>
     """, unsafe_allow_html=True)
     
@@ -393,7 +393,7 @@ else:
 
 # Footer (Always Visible)
 st.markdown('''
-<div class="custom-footer">
+<div class="custom-footer" style="text-align: center; margin: 2rem auto; width: 100%;">
     <p>&copy; 2025 MITS IMS. All Rights Reserved.</p>
 </div>
 ''', unsafe_allow_html=True)
