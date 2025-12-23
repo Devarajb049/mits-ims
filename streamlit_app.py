@@ -44,73 +44,125 @@ st.markdown("""
         max-width: 100%;
     }
     
-    /* Global Styles */
+    /* Global Styles - Deep Dark Blue Theme */
     .stApp {
-        background: radial-gradient(circle at 50% 0%, #1e293b 0%, #020617 100%);
+        background: radial-gradient(circle at 50% 0%, #0f2e4a 0%, #020617 80%);
         font-family: 'Outfit', sans-serif;
-        color: #f8fafc;
-        overflow: hidden; /* Prevent scrolling */
-    }
-    /* Fixed Width & Responsive Container */
-    div[data-testid="stForm"] {
-        background: #1e293b; /* Solid Obsidian */
-        border: 1px solid #334155;
-        border-radius: 1.25rem;
-        padding: 2.5rem;
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
-        
-        /* Fixed Constrains */
-        width: 100%;
-        max-width: 420px; 
-        margin: 0 auto; /* Center Horizontal */
-        display: block;
+        color: #e2e8f0;
+        overflow-x: hidden;
     }
 
-    /* Inputs - Merged Container */
+    /* Fixed Width Card with Glow */
+    div[data-testid="stForm"] {
+        background: #0b1421;
+        border: 1px solid #1e293b;
+        border-radius: 1.5rem;
+        padding: 2.5rem;
+        box-shadow: 0 0 40px -10px rgba(56, 189, 248, 0.15); /* Blue Glow */
+        width: 100%;
+        max-width: 400px; 
+        margin: 0 auto;
+        position: relative;
+    }
+    
+    /* Inputs */
+    .stTextInput > label {
+        color: #94a3b8 !important;
+        font-size: 0.85rem !important;
+        font-weight: 500;
+        margin-bottom: 0.4rem;
+    }
+    
     .stTextInput > div > div {
-        background: #0f172a;
-        border: 1px solid #334155;
+        background: #162032;
+        border: 1px solid #28354a;
         border-radius: 0.75rem;
         transition: all 0.2s ease;
     }
     
-    /* Clear default input styles */
     .stTextInput > div > div > input {
+        color: white;
+        padding: 0.8rem 1rem;
         background-color: transparent !important;
         border: none !important;
-        color: #f8fafc;
-        padding: 0.8rem 1rem;
     }
 
-    /* Focus State */
     .stTextInput > div > div:focus-within {
-        border-color: #60a5fa;
-        background: #020617;
-        box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+        border-color: #38bdf8;
+        box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+        background: #1a253a;
     }
-
-    /* Mobile Responsiveness */
-    @media (max-width: 480px) {
-        div[data-testid="stForm"] {
-            padding: 1.5rem;
-            border-radius: 1rem;
-            max-width: 100%;
-        }
-        .stApp {
-            background: #020617;
-        }
-        h1 { font-size: 2rem !important; }
+    
+    /* Primary Button - Bright Blue */
+    .stButton > button {
+        background: linear-gradient(90deg, #0ea5e9 0%, #2563eb 100%);
+        color: white;
+        border: none;
+        padding: 0.9rem;
+        border-radius: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-transform: none; 
+        font-size: 1rem;
+        width: 100% !important;
+        box-shadow: 0 4px 15px -3px rgba(14, 165, 233, 0.4);
+        margin-top: 1.5rem;
     }
-
-    /* Vertical Centering Adjustment */
-    .login-spacer {
-        height: 5vh; /* Reduced to prevent scrolling on small screens */
+    .stButton > button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px -3px rgba(14, 165, 233, 0.5);
+    }
+    
+    /* Logo Container in Header */
+    .logo-container {
         display: flex;
         justify-content: center;
+        margin-bottom: 1.5rem;
     }
-    @media (min-height: 700px) {
-        .login-spacer { height: 15vh; }
+    .logo-circle {
+        width: 60px;
+        height: 60px;
+        background: rgba(14, 165, 233, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(14, 165, 233, 0.3);
+        box-shadow: 0 0 20px rgba(14, 165, 233, 0.2);
     }
+
+    /* Footer */
+    .custom-footer {
+        text-align: center;
+        padding: 2rem 0;
+        color: #475569;
+        font-size: 0.75rem;
+        border-top: none;
+        margin-top: 2rem;
+        background: transparent;
+    }
+
+    /* Spacers */
+    .login-spacer { height: 8vh; display: flex; justify-content: center; }
+    @media (min-height: 800px) { .login-spacer { height: 12vh; } }
+    
+    /* Dashboard Colors & Cards */
+    .glass-card {
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 1rem;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        border-left: 4px solid #334155;
+    }
+    
+    .border-green { border-left-color: #10b981 !important; background: rgba(16, 185, 129, 0.05); }
+    .border-yellow { border-left-color: #f59e0b !important; background: rgba(245, 158, 11, 0.05); }
+    .border-red { border-left-color: #ef4444 !important; background: rgba(239, 68, 68, 0.05); }
+    
+    .text-green { color: #34d399; }
+    .text-yellow { color: #fbbf24; }
+    .text-red { color: #f87171; }
     </style>
     """, unsafe_allow_html=True)
 
@@ -260,11 +312,22 @@ if 'user_name' not in st.session_state:
 # Login Screen
 if not st.session_state.logged_in:
     st.markdown('<div class="login-spacer"></div>', unsafe_allow_html=True)
+    
+    # Custom Logo & Header matching the screenshot look
     st.markdown("""
-        <div style="text-align: center; margin-bottom: 3rem;">
-            <h1 style="font-weight: 800; font-size: 3.5rem; background: linear-gradient(to right, #60a5fa, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem; letter-spacing: -1px;">MITS IMS</h1>
-            <p style="color: #94a3b8; font-size: 1.1rem; font-weight: 300;">Secure Attendance Portal</p>
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <div class="logo-container">
+                <div class="logo-circle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#38bdf8" viewBox="0 0 16 16">
+                      <path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/>
+                    </svg>
+                </div>
+            </div>
+            <h1 style="font-weight: 800; font-size: 1.8rem; color: white; margin-bottom: 0.5rem; letter-spacing: 0.5px; text-transform: uppercase;">SCHOOL PORTAL</h1>
+            <p style="color: #64748b; font-size: 0.9rem; font-weight: 400;">Secure Login for Students & Faculty</p>
         </div>
+    """, unsafe_allow_html=True)
+
     """, unsafe_allow_html=True)
     
     with st.form("login_form"):
