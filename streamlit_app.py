@@ -14,28 +14,15 @@ st.set_page_config(
 
 # Custom Styling
 st.markdown("""
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-/* ===============================
+    <style>
+  /* ===============================
    GLOBAL RESET & THEME
 ================================ */
 .stApp {
-    background: radial-gradient(circle at 50% 10%, #1e293b, #020617);
+    background: radial-gradient(circle at 50% 10%, #2e3b4e, #020617);
     font-family: 'Outfit', sans-serif;
-    color: #f1f5f9;
+    color: #e2e8f0;
     overflow-x: hidden;
-}
-
-/* ===============================
-   ENTRANCE ANIMATIONS
-================================ */
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.animate-fade-in {
-    animation: fadeInUp 0.6s ease-out forwards;
 }
 
 /* ===============================
@@ -60,9 +47,9 @@ a.anchor-link,
    PAGE LAYOUT
 ================================ */
 .block-container {
-    padding-top: 4rem !important;
+    padding-top: 5rem !important;
     padding-bottom: 2rem !important;
-    max-width: 500px;
+    max-width: 450px;
     margin: 0 auto;
 }
 
@@ -78,158 +65,122 @@ div[data-testid="stForm"] {
 
 /* ===============================
    UNIFIED INPUT STYLE
+   (TEXT + PASSWORD)
 ================================ */
 .stTextInput {
     background: transparent !important;
-    margin-bottom: 1.25rem !important;
 }
 
 .stTextInput div[data-baseweb="input"] {
-    background: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    background: rgba(255, 255, 255, 0.12) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
     border-radius: 999px !important;
-    backdrop-filter: blur(12px);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+    transition: all 0.25s ease;
 }
 
+/* FOCUS STATE */
 .stTextInput div[data-baseweb="input"]:focus-within {
-    background: rgba(255, 255, 255, 0.1) !important;
-    border-color: #38bdf8 !important; /* Sky Blue focus */
-    box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+    background: rgba(255, 255, 255, 0.22) !important;
+    border-color: #fb7185 !important;
+    border-radius: 999px !important;
+    box-shadow: 0 0 0 1.5px rgba(251, 113, 133, 0.9);
 }
 
+/* INPUT FIELD */
 .stTextInput input {
     background: transparent !important;
     color: #ffffff !important;
-    padding: 1rem 1.5rem !important;
+    padding: 0.75rem 1rem !important;
     font-weight: 500;
-    font-size: 1rem;
     border: none !important;
 }
 
+/* PLACEHOLDER */
 .stTextInput input::placeholder {
     color: #94a3b8 !important;
-    opacity: 0.6;
 }
 
+/* REMOVE LABEL GAP */
 .stTextInput label {
     display: none !important;
 }
 
 /* ===============================
-   MODERN BUTTON
-================================ */
-.stButton {
-    width: 100%;
-    margin-top: 1.5rem !important;
-}
-
-.stButton > button {
-    background: #ffffff !important;
-    color: #0f172a !important;
-    border: none;
-    padding: 0.85rem 2rem !important;
-    border-radius: 999px !important;
-    width: 100% !important;
-    font-weight: 700 !important;
-    font-size: 1.1rem !important;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
-}
-
-.stButton > button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(255, 255, 255, 0.15), 0 4px 6px -2px rgba(255, 255, 255, 0.05) !important;
-    background: #f8fafc !important;
-}
-
-.stButton > button:active {
-    transform: translateY(0);
-}
-
-/* ===============================
-   LOGOUT BUTTON
+   LOGOUT BUTTON (SINGLE, RWD)
 ================================ */
 button[kind="secondary"][data-testid="baseButton-secondary"] {
-    background: rgba(255, 255, 255, 0.05) !important;
-    color: #94a3b8 !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #e5e7eb !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
     border-radius: 999px !important;
-    padding: 0.5rem 1.25rem !important;
-    font-size: 0.85rem !important;
-    font-weight: 600 !important;
+    padding: 0.45rem 1rem !important;
+    font-size: 0.8rem !important;
+    font-weight: 600;
     position: fixed;
-    top: 1.5rem;
-    right: 1.5rem;
-    backdrop-filter: blur(8px);
+    top: 1rem;
+    right: 1rem;
+    backdrop-filter: blur(10px);
     transition: all 0.2s ease;
     z-index: 9999;
 }
 
+/* Hover */
 button[kind="secondary"][data-testid="baseButton-secondary"]:hover {
-    background: rgba(255, 255, 255, 0.1) !important;
+    background: rgba(255, 255, 255, 0.18) !important;
     color: #ffffff !important;
-    border-color: rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 0 12px rgba(255,255,255,0.25);
+    transform: translateY(-1px);
 }
+
 
 /* ===============================
    DASHBOARD CARDS
 ================================ */
-.aggregate-card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 2rem;
-    padding: 2.5rem 2rem;
-    text-align: center;
-    margin-bottom: 2.5rem;
-    backdrop-filter: blur(20px);
-}
-
 .custom-card {
-    background: rgba(15, 23, 42, 0.6);
-    border-radius: 1.25rem;
-    padding: 1.5rem;
-    margin-bottom: 1rem;
+    background: #0f172a;
+    border-radius: 1rem;
+    padding: 1.25rem;
+    margin-bottom: 0.75rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: all 0.3s ease;
+    border: 1px solid #1e293b;
 }
 
-.custom-card:hover {
-    transform: scale(1.02);
-    border-color: rgba(255, 255, 255, 0.15);
-    background: rgba(15, 23, 42, 0.8);
+.aggregate-card {
+    background: radial-gradient(circle at 50% 100%, #1e293b, #0f172a);
+    border: 1px solid #334155;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
 }
 
 .percentage-display {
     font-weight: 800;
     font-size: 1.75rem;
-    font-family: 'Inter', sans-serif;
 }
 
 /* ===============================
    TEXT COLORS
 ================================ */
-.text-green { color: #10b981; }
-.text-yellow { color: #f59e0b; }
-.text-red { color: #ef4444; }
-.text-muted { color: #64748b; }
+.text-green { color: #34d399; }
+.text-yellow { color: #fbbf24; }
+.text-red { color: #f87171; }
 
 /* ===============================
    FOOTER
 ================================ */
 .custom-footer {
     text-align: center;
-    margin-top: 4rem;
-    padding-bottom: 2rem;
-    color: #475569;
-    font-size: 0.85rem;
-    letter-spacing: 0.025em;
+    margin: 2rem auto;
+    color: #64748b;
+    font-size: 0.8rem;
 }
-</style>
-""", unsafe_allow_html=True)
+
+    </style>
+    """, unsafe_allow_html=True)
 
 # Install Playwright Dependencies (Cached)
 @st.cache_resource
@@ -376,46 +327,45 @@ if 'user_name' not in st.session_state:
 
 # Login Screen
 if not st.session_state.logged_in:
-    st.markdown('<div class="login-spacer animate-fade-in"></div>', unsafe_allow_html=True)
+    st.markdown('<div class="login-spacer"></div>', unsafe_allow_html=True)
     
-    # Custom Logo & Header
+    # Custom Logo & Header matching the screenshot look
     st.markdown("""
-        <div class="animate-fade-in" style="text-align: center; margin-bottom: 3.5rem;">
-            <div style="display: flex; justify-content: center; margin-bottom: 1.5rem;">
-                <div style="background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 1.5rem; padding: 1rem; backdrop-filter: blur(10px);">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#38bdf8" viewBox="0 0 16 16">
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <div class="logo-container">
+                <div class="logo-circle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#38bdf8" viewBox="0 0 16 16">
                       <path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/>
                     </svg>
                 </div>
             </div>
-            <h1 style="font-weight: 800; font-size: 2.25rem; color: white; margin-bottom: 0.5rem; letter-spacing: -0.025em;">MITS IMS</h1>
-            <p style="color: #94a3b8; font-size: 1rem; font-weight: 500;">Attendance Monitoring System</p>
+            <h1 style="font-weight: 800; font-size: 1.8rem; color: white; margin-bottom: 0.5rem; letter-spacing: 0.5px; text-transform: uppercase;">MITS IMS</h1>
+            <p style="color: #64748b; font-size: 0.9rem; font-weight: 400;">Secure Login for Students</p>
         </div>
     """, unsafe_allow_html=True)
     
-    with st.container():
-        st.markdown('<div class="animate-fade-in">', unsafe_allow_html=True)
-        with st.form("login_form"):
-            username = st.text_input("Username", placeholder="Registration Number")
-            password = st.text_input("Password", placeholder="Password", type="password")
-            submitted = st.form_submit_button("Sign In")
-            
-            if submitted:
-                if not username or not password:
-                    st.warning("Please enter Credentials")
+    with st.form("login_form"):
+        # Labels are hidden via CSS for cleaner glassmorphism look
+        username = st.text_input("Username", placeholder="Registration Number")
+        password = st.text_input("Password", placeholder="Password", type="password")
+        
+        submitted = st.form_submit_button("Sign In")
+        
+        if submitted:
+            if not username or not password:
+                st.warning("Please enter Credentials")
+            else:
+                with st.spinner("Connecting to MITS Portal..."):
+                    result = fetch_attendance(username, password)
+                    
+                if "error" in result:
+                    st.error(result['error'])
                 else:
-                    with st.spinner("Authenticating..."):
-                        result = fetch_attendance(username, password)
-                        
-                    if "error" in result:
-                        st.error(result['error'])
-                    else:
-                        st.session_state.logged_in = True
-                        st.session_state.data = result['data']
-                        st.session_state.user_name = result['name']
-                        st.session_state.debug_text = result.get('debug_text', "")
-                        st.rerun()
-        st.markdown('</div>', unsafe_allow_html=True)
+                    st.session_state.logged_in = True
+                    st.session_state.data = result['data']
+                    st.session_state.user_name = result['name']
+                    st.session_state.debug_text = result.get('debug_text', "")
+                    st.rerun()
 
 # Dashboard Screen
 else:
