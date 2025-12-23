@@ -384,14 +384,14 @@ else:
         color = "green" if overall >= 75 else "yellow" if overall >= 65 else "red"
         
         st.markdown(f"""
-        <div class="aggregate-card">
-            <p style="color: #94a3b8; font-size: 0.875rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">Aggregate Percentage</p>
-            <h1 style="font-size: 3.5rem; font-weight: 700; color: {'#34d399' if overall >= 75 else '#fbbf24' if overall >= 65 else '#f87171'}; margin: 0; line-height: 1;">{overall:.2f}%</h1>
-             <p style="color: #64748b; margin-top: 1rem; font-size: 0.875rem;">
-                Classes Attended: <b style="color: #f1f5f9">{total_attended}</b> / <span style="color: #94a3b8">{total_conducted}</span>
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
+<div class="aggregate-card">
+    <p style="color: #94a3b8; font-size: 0.875rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">Aggregate Percentage</p>
+    <h1 style="font-size: 3.5rem; font-weight: 700; color: {'#34d399' if overall >= 75 else '#fbbf24' if overall >= 65 else '#f87171'}; margin: 0; line-height: 1;">{overall:.2f}%</h1>
+     <p style="color: #64748b; margin-top: 1rem; font-size: 0.875rem;">
+        Classes Attended: <b style="color: #f1f5f9">{total_attended}</b> / <span style="color: #94a3b8">{total_conducted}</span>
+    </p>
+</div>
+""", unsafe_allow_html=True)
         
         # Grid for Subjects
         st.subheader("Subject Detailed Report")
