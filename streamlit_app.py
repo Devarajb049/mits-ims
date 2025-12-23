@@ -1,10 +1,8 @@
 import streamlit as st
-import pandas as pd
 from playwright.sync_api import sync_playwright
 import time
 import re
 import subprocess
-import sys
 
 # Page Configuration
 st.set_page_config(
@@ -110,7 +108,6 @@ st.markdown("""
         border-radius: 0.75rem !important;
         transition: all 0.2s ease-in-out;
         box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.2) !important; /* Inner shadow for depth */
-        padding-right: 2.5rem; /* Space for eye icon if needed, though streamlit usually handles it */
     }
     
     /* Focus state */
@@ -377,9 +374,7 @@ else:
     
     if not data:
         st.info("No attendance data found. The page might not have loaded correctly.")
-        if st.session_state.get('debug_text'):
-            with st.expander("Show Debug Info (Send this to developer)"):
-                st.code(st.session_state.debug_text)
+        pass
     else:
         # Statistics
         total_attended = sum(d['attended'] for d in data)
@@ -421,18 +416,13 @@ else:
             else:
                 graph_width = 0
             
-            border_cls = "border-green"
-            text_cls = "text-green"
-            bar_color = "#34d399"
+                text_cls = "text-green"
             
             if perc < 75:
-                border_cls = "border-yellow"
                 text_cls = "text-yellow"
-                bar_color = "#fbbf24"
             if perc < 65:
-                border_cls = "border-red"
                 text_cls = "text-red"
-                bar_color = "#f87171"
+
                 
             # Custom Card HTML (No Graph, explicitly showing counts)
             card_html = f'''
