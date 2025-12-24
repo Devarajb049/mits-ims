@@ -324,6 +324,6 @@ else:
 # Footer
 st.markdown("""
     <div class="text-center py-12 text-slate-600 font-medium text-[11px] uppercase tracking-widest">
-        &copy; 2025 MITS IMS • Modern Attendance UI
+        &copy; 2025 MITS IMS
     </div>
 """, unsafe_allow_html=True)
