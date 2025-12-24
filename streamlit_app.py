@@ -14,22 +14,16 @@ st.set_page_config(
 )
 
 # Custom Styling
-st.markdown(r"""
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-  /* ===============================
-   GLOBAL RESET & THEME
-================================ */
+# Custom Styling
+st.markdown(r"""<style>
+/* GLOBAL RESET & THEME */
 .stApp {
-    background: radial-gradient(circle at 50% 10%, #2e3b4e, #020617);
-    font-family: 'Outfit', sans-serif;
-    color: #e2e8f0;
-    overflow-x: hidden;
+background: radial-gradient(circle at 50% 10%, #2e3b4e, #020617);
+font-family: 'Outfit', sans-serif;
+color: #e2e8f0;
+overflow-x: hidden;
 }
-
-/* ===============================
-   HIDE STREAMLIT DEFAULT UI
-================================ */
+/* HIDE STREAMLIT DEFAULT UI */
 header[data-testid="stHeader"],
 footer,
 #MainMenu,
@@ -40,226 +34,176 @@ footer,
 [data-testid="stFooter"],
 a.anchor-link,
 [class*="viewerBadge"] {
-    display: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
+display: none !important;
+visibility: hidden !important;
+height: 0 !important;
 }
-
-/* ===============================
-   PAGE LAYOUT
-================================ */
+/* PAGE LAYOUT */
 .block-container {
-    padding-top: 5rem !important;
-    padding-bottom: 2rem !important;
-    max-width: 450px;
-    margin: 0 auto;
+padding-top: 5rem !important;
+padding-bottom: 2rem !important;
+max-width: 450px;
+margin: 0 auto;
 }
-
-/* ===============================
-   FORM CONTAINER
-================================ */
+/* FORM CONTAINER */
 div[data-testid="stForm"] {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
+background: transparent !important;
+border: none !important;
+box-shadow: none !important;
+padding: 0 !important;
 }
-
-/* ===============================
-   UNIFIED INPUT STYLE
-   (TEXT + PASSWORD)
-================================ */
+/* UNIFIED INPUT STYLE */
 .stTextInput {
-    background: transparent !important;
+background: transparent !important;
 }
-
 .stTextInput div[data-baseweb="input"] {
-    background: rgba(255, 255, 255, 0.12) !important;
-    border: 1px solid rgba(255, 255, 255, 0.25) !important;
-    border-radius: 999px !important;
-    backdrop-filter: blur(10px);
-    transition: all 0.25s ease;
+background: rgba(255, 255, 255, 0.12) !important;
+border: 1px solid rgba(255, 255, 255, 0.25) !important;
+border-radius: 999px !important;
+backdrop-filter: blur(10px);
+transition: all 0.25s ease;
 }
-
-/* FOCUS STATE */
 .stTextInput div[data-baseweb="input"]:focus-within {
-    background: rgba(255, 255, 255, 0.22) !important;
-    border-color: #fb7185 !important;
-    border-radius: 999px !important;
-    box-shadow: 0 0 0 1.5px rgba(251, 113, 133, 0.9);
+background: rgba(255, 255, 255, 0.22) !important;
+border-color: #fb7185 !important;
+border-radius: 999px !important;
+box-shadow: 0 0 0 1.5px rgba(251, 113, 133, 0.9);
 }
-
-/* INPUT FIELD */
 .stTextInput input {
-    background: transparent !important;
-    color: #ffffff !important;
-    padding: 0.75rem 1rem !important;
-    font-weight: 500;
-    border: none !important;
+background: transparent !important;
+color: #ffffff !important;
+padding: 0.75rem 1rem !important;
+font-weight: 500;
+border: none !important;
 }
-
-/* PLACEHOLDER */
 .stTextInput input::placeholder {
-    color: #94a3b8 !important;
+color: #94a3b8 !important;
 }
-
-/* REMOVE LABEL GAP */
 .stTextInput label {
-    display: none !important;
+display: none !important;
 }
-
-/* ===============================
-   LOGOUT BUTTON (ICON + TEXT)
-================================ */
+/* LOGOUT BUTTON */
 button[kind="secondary"][data-testid="baseButton-secondary"] {
-    background: rgba(255, 255, 255, 0.08) !important;
-    color: #fca5a1 !important;
-    border: 1px solid rgba(251, 113, 133, 0.2) !important;
-    border-radius: 999px !important;
-    padding: 0.5rem 1.25rem !important;
-    font-size: 0.85rem !important;
-    font-weight: 700 !important;
-    position: fixed;
-    top: 1.25rem;
-    right: 1.25rem;
-    width: auto !important;
-    min-width: unset !important;
-    backdrop-filter: blur(12px);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 9999;
-    white-space: nowrap !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+background: rgba(255, 255, 255, 0.08) !important;
+color: #fca5a1 !important;
+border: 1px solid rgba(251, 113, 133, 0.2) !important;
+border-radius: 999px !important;
+padding: 0.5rem 1.25rem !important;
+font-size: 0.85rem !important;
+font-weight: 700 !important;
+position: fixed;
+top: 1.25rem;
+right: 1.25rem;
+width: auto !important;
+min-width: unset !important;
+backdrop-filter: blur(12px);
+transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+z-index: 9999;
+white-space: nowrap !important;
+display: flex !important;
+align-items: center !important;
+justify-content: center !important;
+box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
-
-/* Add FA Icon via pseudo-element */
 button[kind="secondary"][data-testid="baseButton-secondary"] div[data-testid="stMarkdownContainer"] p::before {
-    content: "\f011"; /* FA power-off */
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-    margin-right: 8px;
-    font-size: 0.9rem;
+content: "\f011";
+font-family: "Font Awesome 6 Free";
+font-weight: 900;
+margin-right: 8px;
+font-size: 0.9rem;
 }
-
-/* Hover effect */
 button[kind="secondary"][data-testid="baseButton-secondary"]:hover {
-    background: rgba(225, 29, 72, 0.15) !important;
-    border-color: #fb7185 !important;
-    color: #ffffff !important;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(225, 29, 72, 0.25);
+background: rgba(225, 29, 72, 0.15) !important;
+border-color: #fb7185 !important;
+color: #ffffff !important;
+transform: translateY(-2px);
+box-shadow: 0 6px 20px rgba(225, 29, 72, 0.25);
 }
-
-/* Mobile adjustments */
 @media (max-width: 480px) {
-    button[kind="secondary"][data-testid="baseButton-secondary"] {
-        top: 0.75rem;
-        right: 0.75rem;
-        padding: 0.4rem 1rem !important;
-    }
+button[kind="secondary"][data-testid="baseButton-secondary"] {
+top: 0.75rem;
+right: 0.75rem;
+padding: 0.4rem 1rem !important;
 }
-
-
-/* ===============================
-   DASHBOARD CARDS
-================================ */
+}
+/* DASHBOARD CARDS */
 .custom-card {
-    background: #0f172a;
-    border-radius: 1rem;
-    padding: 1.25rem;
-    margin-bottom: 0.75rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid #1e293b;
+background: #0f172a;
+border-radius: 1rem;
+padding: 1.25rem;
+margin-bottom: 0.75rem;
+display: flex;
+justify-content: space-between;
+align-items: center;
+border: 1px solid #1e293b;
 }
-
 .aggregate-card {
-    background: radial-gradient(circle at 50% 100%, #1e293b, #0f172a);
-    border: 1px solid #334155;
-    border-radius: 1.5rem;
-    padding: 2rem;
-    text-align: center;
-    margin-bottom: 2rem;
+background: radial-gradient(circle at 50% 100%, #1e293b, #0f172a);
+border: 1px solid #334155;
+border-radius: 1.5rem;
+padding: 2rem;
+text-align: center;
+margin-bottom: 2rem;
 }
-
 .percentage-display {
-    font-weight: 800;
-    font-size: 1.75rem;
+font-weight: 800;
+font-size: 1.75rem;
 }
-
-/* ===============================
-   TEXT COLORS
-================================ */
+/* TEXT COLORS */
 .text-green { color: #34d399; }
 .text-yellow { color: #fbbf24; }
 .text-red { color: #f87171; }
-
-/* ===============================
-   FOOTER
-================================ */
+/* FOOTER */
 .custom-footer {
-    text-align: center;
-    margin: 2rem auto;
-    color: #64748b;
-    font-size: 0.8rem;
+text-align: center;
+margin: 2rem auto;
+color: #64748b;
+font-size: 0.8rem;
 }
-
-/* ===============================
-   LOGO & SPACING
-================================ */
+/* LOGO & SPACING */
 .login-spacer { height: 3vh; }
-
 .logo-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1rem;
+display: flex;
+justify-content: center;
+margin-bottom: 1rem;
 }
-
 .logo-circle {
-    width: 64px;
-    height: 64px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+width: 64px;
+height: 64px;
+background: rgba(255, 255, 255, 0.05);
+border: 1px solid rgba(255, 255, 255, 0.1);
+border-radius: 20px;
+display: flex;
+align-items: center;
+justify-content: center;
+backdrop-filter: blur(10px);
+box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
-
-/* ===============================
-   SUBMIT BUTTON styling
-================================ */
+/* SUBMIT BUTTON styling */
 div[data-testid="stFormSubmitButton"] button {
-    background: linear-gradient(135deg, #fb7185 0%, #e11d48 100%) !important;
-    color: white !important;
-    border: none !important;
-    border-radius: 999px !important;
-    padding: 0.75rem 2rem !important;
-    width: 100% !important;
-    font-weight: 700 !important;
-    font-size: 1rem !important;
-    margin-top: 1rem !important;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3) !important;
+background: linear-gradient(135deg, #fb7185 0%, #e11d48 100%) !important;
+color: white !important;
+border: none !important;
+border-radius: 999px !important;
+padding: 0.75rem 2rem !important;
+width: 100% !important;
+font-weight: 700 !important;
+font-size: 1rem !important;
+margin-top: 1rem !important;
+transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3) !important;
 }
-
 div[data-testid="stFormSubmitButton"] button:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 8px 20px rgba(225, 29, 72, 0.4) !important;
-    filter: brightness(1.1);
+transform: translateY(-2px) !important;
+box-shadow: 0 8px 20px rgba(225, 29, 72, 0.4) !important;
+filter: brightness(1.1);
 }
-
 div[data-testid="stFormSubmitButton"] button:active {
-    transform: translateY(0px) !important;
+transform: translateY(0px) !important;
 }
-
-    </style>
-    """, unsafe_allow_html=True)
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+""", unsafe_allow_html=True)
 
 # Install Playwright Dependencies (Cached)
 @st.cache_resource
@@ -503,7 +447,7 @@ else:
             else:
                 graph_width = 0
             
-            # Default color class
+            # Default color class (Must be outside the else block!)
             text_cls = "text-green"
             
             if perc < 75:
@@ -514,19 +458,19 @@ else:
                 
             # Custom Card HTML (No Graph, explicitly showing counts)
             card_html = f'''
-            <div class="custom-card" style="align-items: center;">
-                <div style="flex: 1;">
-                    <div style="font-weight: 700; font-size: 1.1rem; color: white; margin-bottom: 0.4rem;">{item['code']}</div>
-                    <div style="display: flex; gap: 1rem; font-size: 0.85rem; color: #94a3b8;">
-                        <div>Attended: <b style="color: #cbd5e1;">{attended}</b></div>
-                        <div>Conducted: <b style="color: #cbd5e1;">{total}</b></div>
-                    </div>
-                </div>
-                <div class="percentage-display {text_cls}" style="font-size: 1.75rem;">
-                    {perc}%
-                </div>
-            </div>
-            '''
+<div class="custom-card" style="align-items: center;">
+    <div style="flex: 1;">
+        <div style="font-weight: 700; font-size: 1.1rem; color: white; margin-bottom: 0.4rem;">{item['code']}</div>
+        <div style="display: flex; gap: 1rem; font-size: 0.85rem; color: #94a3b8;">
+            <div>Attended: <b style="color: #cbd5e1;">{attended}</b></div>
+            <div>Conducted: <b style="color: #cbd5e1;">{total}</b></div>
+        </div>
+    </div>
+    <div class="percentage-display {text_cls}" style="font-size: 1.75rem;">
+        {perc}%
+    </div>
+</div>
+'''
             st.markdown(card_html, unsafe_allow_html=True)
 
 # Footer (Always Visible)
