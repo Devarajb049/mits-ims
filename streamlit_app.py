@@ -189,7 +189,16 @@ def fetch_attendance(username, password):
             attendance_data = []
             lines = [l.strip() for l in full_text.split('\n') if l.strip()]
             for i, line in enumerate(lines):
-                if re.match(r'^\d*[A-Z]+\d+[A-Z0-9]*$', line) or (line.isupper() and len(line) > 3 and not re.search(r'\d', line)):
+                # Only process lines that look like subject codes or legitimate subject names
+                # AND skip the summary text headers that cause duplicate/invalid entries
+                upper_line = line.upper()
+                if "TOTAL CONDUCTED" in upper_line or "ATTENDANCE %" in upper_line:
+                    continue
+                
+                # Check for subject code pattern (e.g., 23CSE101) or short uppercase subject name
+                is_subject = re.match(r'^\d*[A-Z]+\d+[A-Z0-9]*$', line) or (line.isupper() and 2 < len(line) < 30 and not re.search(r'\d', line))
+                
+                if is_subject:
                     try:
                         lookahead = lines[i+1:i+6]
                         nums = []
@@ -323,7 +332,7 @@ else:
 
 # Footer
 st.markdown("""
-    <div class="text-center py-12 text-slate-600 font-medium text-[11px] uppercase tracking-widest">
+    <div class="text-left py-12 text-slate-600 font-medium text-[11px] uppercase tracking-widest">
         &copy; 2025 MITS IMS
     </div>
 """, unsafe_allow_html=True)
