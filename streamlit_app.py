@@ -14,9 +14,12 @@ st.set_page_config(
 )
 
 # Custom Styling
-# Custom Styling
-st.markdown(r"""<style>
-/* GLOBAL RESET & THEME */
+st.markdown(r"""
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+/* GLOBAL RESET */
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 .stApp {
 background: radial-gradient(circle at 50% 10%, #2e3b4e, #020617);
 font-family: 'Outfit', sans-serif;
@@ -38,12 +41,13 @@ display: none !important;
 visibility: hidden !important;
 height: 0 !important;
 }
-/* PAGE LAYOUT */
+/* PAGE LAYOUT - RESPONSIVE */
 .block-container {
 padding-top: 5rem !important;
 padding-bottom: 2rem !important;
-max-width: 450px;
-margin: 0 auto;
+max-width: 500px !important;
+width: 92% !important;
+margin: 0 auto !important;
 }
 /* FORM CONTAINER */
 div[data-testid="stForm"] {
@@ -55,51 +59,52 @@ padding: 0 !important;
 /* UNIFIED INPUT STYLE */
 .stTextInput {
 background: transparent !important;
+margin-bottom: 1.5rem !important;
 }
 .stTextInput div[data-baseweb="input"] {
-background: rgba(255, 255, 255, 0.12) !important;
-border: 1px solid rgba(255, 255, 255, 0.25) !important;
+background: rgba(255, 255, 255, 0.08) !important;
+border: 1px solid rgba(255, 255, 255, 0.15) !important;
 border-radius: 999px !important;
-backdrop-filter: blur(10px);
-transition: all 0.25s ease;
+backdrop-filter: blur(12px) !important;
+transition: all 0.3s ease !important;
+padding-right: 15px !important;
 }
 .stTextInput div[data-baseweb="input"]:focus-within {
-background: rgba(255, 255, 255, 0.22) !important;
+background: rgba(255, 255, 255, 0.15) !important;
 border-color: #fb7185 !important;
-border-radius: 999px !important;
-box-shadow: 0 0 0 1.5px rgba(251, 113, 133, 0.9);
+box-shadow: 0 0 0 2px rgba(251, 113, 133, 0.4) !important;
 }
 .stTextInput input {
 background: transparent !important;
 color: #ffffff !important;
-padding: 0.75rem 1rem !important;
-font-weight: 500;
+padding: 0.85rem 1.25rem !important;
+font-weight: 500 !important;
+font-size: 1rem !important;
 border: none !important;
-}
-.stTextInput input::placeholder {
-color: #94a3b8 !important;
 }
 .stTextInput label {
 display: none !important;
 }
-/* PASSWORD VISIBILITY TOGGLE FIX */
+/* PASSWORD VISIBILITY TOGGLE - ULTIMATE FIX */
 button[data-testid="stTextInputPasswordVisibility"], 
-div[data-testid="stTextInputPasswordVisibility"] {
+div[data-testid="stTextInputPasswordVisibility"],
+button[data-testid="stTextInputPasswordVisibility"] div,
+button[data-testid="stTextInputPasswordVisibility"] span {
+background: transparent !important;
 background-color: transparent !important;
 border: none !important;
+box-shadow: none !important;
 color: #94a3b8 !important;
-right: 8px !important;
+outline: none !important;
 }
 button[data-testid="stTextInputPasswordVisibility"]:hover {
-background-color: rgba(255,255,255,0.1) !important;
-color: white !important;
-border-radius: 50% !important;
+color: #fb7185 !important;
 }
-/* Ensure the icon itself is centered and visible */
 button[data-testid="stTextInputPasswordVisibility"] svg {
 fill: currentColor !important;
 }
-/* LOGOUT BUTTON */
+
+/* LOGOUT BUTTON - NO WRAP */
 button[kind="secondary"][data-testid="baseButton-secondary"] {
 background: rgba(255, 255, 255, 0.08) !important;
 color: #fca5a1 !important;
@@ -108,20 +113,22 @@ border-radius: 999px !important;
 padding: 0.5rem 1.25rem !important;
 font-size: 0.85rem !important;
 font-weight: 700 !important;
-position: fixed;
-top: 1.25rem;
-right: 1.25rem;
+position: fixed !important;
+top: 1.25rem !important;
+right: 1.25rem !important;
 width: auto !important;
-min-width: unset !important;
-backdrop-filter: blur(12px);
-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-z-index: 9999;
+min-width: fit-content !important;
+max-width: fit-content !important;
 white-space: nowrap !important;
+backdrop-filter: blur(12px) !important;
+transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+z-index: 9999 !important;
 display: flex !important;
 align-items: center !important;
 justify-content: center !important;
-box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
 }
+
 button[kind="secondary"][data-testid="baseButton-secondary"] div[data-testid="stMarkdownContainer"] p::before {
 content: "\f011";
 font-family: "Font Awesome 6 Free";
@@ -129,6 +136,7 @@ font-weight: 900;
 margin-right: 8px;
 font-size: 0.9rem;
 }
+
 button[kind="secondary"][data-testid="baseButton-secondary"]:hover {
 background: rgba(225, 29, 72, 0.15) !important;
 border-color: #fb7185 !important;
@@ -136,10 +144,11 @@ color: #ffffff !important;
 transform: translateY(-2px);
 box-shadow: 0 6px 20px rgba(225, 29, 72, 0.25);
 }
+
 @media (max-width: 480px) {
 button[kind="secondary"][data-testid="baseButton-secondary"] {
-top: 0.75rem;
-right: 0.75rem;
+top: 0.75rem !important;
+right: 0.75rem !important;
 padding: 0.4rem 1rem !important;
 }
 }
