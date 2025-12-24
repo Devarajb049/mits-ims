@@ -82,6 +82,23 @@ color: #94a3b8 !important;
 .stTextInput label {
 display: none !important;
 }
+/* PASSWORD VISIBILITY TOGGLE FIX */
+button[data-testid="stTextInputPasswordVisibility"], 
+div[data-testid="stTextInputPasswordVisibility"] {
+background-color: transparent !important;
+border: none !important;
+color: #94a3b8 !important;
+right: 8px !important;
+}
+button[data-testid="stTextInputPasswordVisibility"]:hover {
+background-color: rgba(255,255,255,0.1) !important;
+color: white !important;
+border-radius: 50% !important;
+}
+/* Ensure the icon itself is centered and visible */
+button[data-testid="stTextInputPasswordVisibility"] svg {
+fill: currentColor !important;
+}
 /* LOGOUT BUTTON */
 button[kind="secondary"][data-testid="baseButton-secondary"] {
 background: rgba(255, 255, 255, 0.08) !important;
