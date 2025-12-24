@@ -3,6 +3,7 @@ from playwright.sync_api import sync_playwright
 import time
 import re
 import subprocess
+import sys
 
 # Page Configuration
 st.set_page_config(
@@ -13,7 +14,8 @@ st.set_page_config(
 )
 
 # Custom Styling
-st.markdown("""
+st.markdown(r"""
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
   /* ===============================
    GLOBAL RESET & THEME
@@ -107,32 +109,56 @@ div[data-testid="stForm"] {
 }
 
 /* ===============================
-   LOGOUT BUTTON (SINGLE, RWD)
+   LOGOUT BUTTON (ICON + TEXT)
 ================================ */
 button[kind="secondary"][data-testid="baseButton-secondary"] {
     background: rgba(255, 255, 255, 0.08) !important;
-    color: #e5e7eb !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: #fca5a1 !important;
+    border: 1px solid rgba(251, 113, 133, 0.2) !important;
     border-radius: 999px !important;
-    padding: 0.45rem 1rem !important;
-    font-size: 0.8rem !important;
-    font-weight: 600;
+    padding: 0.5rem 1.25rem !important;
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
     position: fixed;
-    top: 1rem;
-    width: 100px !important;
-    right: 1rem;
-    backdrop-filter: blur(10px);
-    transition: all 0.2s ease;
+    top: 1.25rem;
+    right: 1.25rem;
+    width: auto !important;
+    min-width: unset !important;
+    backdrop-filter: blur(12px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 9999;
+    white-space: nowrap !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
-/* Hover */
+/* Add FA Icon via pseudo-element */
+button[kind="secondary"][data-testid="baseButton-secondary"] div[data-testid="stMarkdownContainer"] p::before {
+    content: "\f011"; /* FA power-off */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 8px;
+    font-size: 0.9rem;
+}
+
+/* Hover effect */
 button[kind="secondary"][data-testid="baseButton-secondary"]:hover {
-    background: rgba(255, 255, 255, 0.18) !important;
+    background: rgba(225, 29, 72, 0.15) !important;
+    border-color: #fb7185 !important;
     color: #ffffff !important;
-    width: 100px !important;
-    box-shadow: 0 0 12px rgba(255,255,255,0.25);
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(225, 29, 72, 0.25);
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+    button[kind="secondary"][data-testid="baseButton-secondary"] {
+        top: 0.75rem;
+        right: 0.75rem;
+        padding: 0.4rem 1rem !important;
+    }
 }
 
 
@@ -181,6 +207,57 @@ button[kind="secondary"][data-testid="baseButton-secondary"]:hover {
     font-size: 0.8rem;
 }
 
+/* ===============================
+   LOGO & SPACING
+================================ */
+.login-spacer { height: 3vh; }
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.logo-circle {
+    width: 64px;
+    height: 64px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+/* ===============================
+   SUBMIT BUTTON styling
+================================ */
+div[data-testid="stFormSubmitButton"] button {
+    background: linear-gradient(135deg, #fb7185 0%, #e11d48 100%) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 999px !important;
+    padding: 0.75rem 2rem !important;
+    width: 100% !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    margin-top: 1rem !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3) !important;
+}
+
+div[data-testid="stFormSubmitButton"] button:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(225, 29, 72, 0.4) !important;
+    filter: brightness(1.1);
+}
+
+div[data-testid="stFormSubmitButton"] button:active {
+    transform: translateY(0px) !important;
+}
+
     </style>
     """, unsafe_allow_html=True)
 
@@ -189,7 +266,7 @@ button[kind="secondary"][data-testid="baseButton-secondary"]:hover {
 def install_browsers():
     try:
         # Check if we can run playwright
-        subprocess.run(["playwright", "install", "chromium"], check=True)
+        subprocess.run([sys.executable, "-m", "playwright", "install", "chromium"], check=True)
     except Exception as e:
         st.error(f"Failed to install Playwright browsers: {e}")
 
@@ -375,7 +452,7 @@ else:
     # Header (Logout Button Only)
     c_spacer, c_logout = st.columns([5, 1])
     with c_logout:
-       if st.button("⏻ Logout", key="logout"):
+       if st.button("Logout", key="logout"):
            st.session_state.logged_in = False
            st.session_state.data = None
            st.rerun()
@@ -426,7 +503,8 @@ else:
             else:
                 graph_width = 0
             
-                text_cls = "text-green"
+            # Default color class
+            text_cls = "text-green"
             
             if perc < 75:
                 text_cls = "text-yellow"
