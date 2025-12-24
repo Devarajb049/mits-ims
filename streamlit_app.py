@@ -9,502 +9,321 @@ import sys
 st.set_page_config(
     page_title="MITS IMS Attendance",
     page_icon="🎓",
-    layout="centered", # centering for login feel
+    layout="centered",
     initial_sidebar_state="collapsed"
 )
 
-# Custom Styling
+# --- Consolidated Premium Styling (Glassmorphism + Tailwind) ---
 st.markdown(r"""
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-/* GLOBAL RESET */
-* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-.stApp {
-background: radial-gradient(circle at 50% 10%, #2e3b4e, #020617);
-font-family: 'Outfit', sans-serif;
-color: #e2e8f0;
-overflow-x: hidden;
-}
-/* HIDE STREAMLIT DEFAULT UI */
-header[data-testid="stHeader"],
-footer,
-#MainMenu,
-.stDeployButton,
-[data-testid="stToolbar"],
-[data-testid="stDecoration"],
-[data-testid="stStatusWidget"],
-[data-testid="stFooter"],
-a.anchor-link,
-[class*="viewerBadge"] {
-display: none !important;
-visibility: hidden !important;
-height: 0 !important;
-}
-/* PAGE LAYOUT - RESPONSIVE */
-.block-container {
-padding-top: 5rem !important;
-padding-bottom: 2rem !important;
-max-width: 500px !important;
-width: 92% !important;
-margin: 0 auto !important;
-}
-/* FORM CONTAINER */
-div[data-testid="stForm"] {
-background: transparent !important;
-border: none !important;
-box-shadow: none !important;
-padding: 0 !important;
-}
-/* UNIFIED INPUT STYLE */
-.stTextInput {
-background: transparent !important;
-margin-bottom: 1.5rem !important;
-}
-.stTextInput div[data-baseweb="input"] {
-background: rgba(255, 255, 255, 0.08) !important;
-border: 1px solid rgba(255, 255, 255, 0.15) !important;
-border-radius: 999px !important;
-backdrop-filter: blur(12px) !important;
-transition: all 0.3s ease !important;
-padding-right: 15px !important;
-}
-.stTextInput div[data-baseweb="input"]:focus-within {
-background: rgba(255, 255, 255, 0.15) !important;
-border-color: #fb7185 !important;
-box-shadow: 0 0 0 2px rgba(251, 113, 133, 0.4) !important;
-}
-.stTextInput input {
-background: transparent !important;
-color: #ffffff !important;
-padding: 0.85rem 1.25rem !important;
-font-weight: 500 !important;
-font-size: 1rem !important;
-border: none !important;
-}
-.stTextInput label {
-display: none !important;
-}
-/* PASSWORD VISIBILITY TOGGLE - ULTIMATE FIX */
-button[data-testid="stTextInputPasswordVisibility"], 
-div[data-testid="stTextInputPasswordVisibility"],
-button[data-testid="stTextInputPasswordVisibility"] div,
-button[data-testid="stTextInputPasswordVisibility"] span {
-background: transparent !important;
-background-color: transparent !important;
-border: none !important;
-box-shadow: none !important;
-color: #94a3b8 !important;
-outline: none !important;
-}
-button[data-testid="stTextInputPasswordVisibility"]:hover {
-color: #fb7185 !important;
-}
-button[data-testid="stTextInputPasswordVisibility"] svg {
-fill: currentColor !important;
-}
+    /* GLOBAL OVERRIDES */
+    * { font-family: 'Outfit', sans-serif !important; box-sizing: border-box; }
+    
+    .stApp {
+        background: radial-gradient(circle at 50% 10%, #1e293b, #020617) !important;
+        color: #e2e8f0 !important;
+    }
 
-/* LOGOUT BUTTON - NO WRAP */
-button[kind="secondary"][data-testid="baseButton-secondary"] {
-background: rgba(255, 255, 255, 0.08) !important;
-color: #fca5a1 !important;
-border: 1px solid rgba(251, 113, 133, 0.2) !important;
-border-radius: 999px !important;
-padding: 0.5rem 1.25rem !important;
-font-size: 0.85rem !important;
-font-weight: 700 !important;
-position: fixed !important;
-top: 1.25rem !important;
-right: 1.25rem !important;
-width: auto !important;
-min-width: fit-content !important;
-max-width: fit-content !important;
-white-space: nowrap !important;
-backdrop-filter: blur(12px) !important;
-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-z-index: 9999 !important;
-display: flex !important;
-align-items: center !important;
-justify-content: center !important;
-box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
-}
+    /* Hide Streamlit Header/Footer */
+    header[data-testid="stHeader"], footer, [data-testid="stToolbar"] {
+        display: none !important;
+    }
 
-button[kind="secondary"][data-testid="baseButton-secondary"] div[data-testid="stMarkdownContainer"] p::before {
-content: "\f011";
-font-family: "Font Awesome 6 Free";
-font-weight: 900;
-margin-right: 8px;
-font-size: 0.9rem;
-}
+    /* Responsive Container */
+    .block-container {
+        padding: 3rem 1rem !important;
+        max-width: 480px !important;
+        margin: 0 auto !important;
+    }
 
-button[kind="secondary"][data-testid="baseButton-secondary"]:hover {
-background: rgba(225, 29, 72, 0.15) !important;
-border-color: #fb7185 !important;
-color: #ffffff !important;
-transform: translateY(-2px);
-box-shadow: 0 6px 20px rgba(225, 29, 72, 0.25);
-}
+    /* GLASS CARD BASE */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.03) !important;
+        backdrop-filter: blur(12px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 24px !important;
+        padding: 1.5rem !important;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37) !important;
+    }
 
-@media (max-width: 480px) {
-button[kind="secondary"][data-testid="baseButton-secondary"] {
-top: 0.75rem !important;
-right: 0.75rem !important;
-padding: 0.4rem 1rem !important;
-}
-}
-/* DASHBOARD CARDS */
-.custom-card {
-background: #0f172a;
-border-radius: 1rem;
-padding: 1.25rem;
-margin-bottom: 0.75rem;
-display: flex;
-justify-content: space-between;
-align-items: center;
-border: 1px solid #1e293b;
-}
-.aggregate-card {
-background: radial-gradient(circle at 50% 100%, #1e293b, #0f172a);
-border: 1px solid #334155;
-border-radius: 1.5rem;
-padding: 2rem;
-text-align: center;
-margin-bottom: 2rem;
-}
-.percentage-display {
-font-weight: 800;
-font-size: 1.75rem;
-}
-/* TEXT COLORS */
-.text-green { color: #34d399; }
-.text-yellow { color: #fbbf24; }
-.text-red { color: #f87171; }
-/* FOOTER */
-.custom-footer {
-text-align: center;
-margin: 2rem auto;
-color: #64748b;
-font-size: 0.8rem;
-}
-/* LOGO & SPACING */
-.login-spacer { height: 3vh; }
-.logo-container {
-display: flex;
-justify-content: center;
-margin-bottom: 1rem;
-}
-.logo-circle {
-width: 64px;
-height: 64px;
-background: rgba(255, 255, 255, 0.05);
-border: 1px solid rgba(255, 255, 255, 0.1);
-border-radius: 20px;
-display: flex;
-align-items: center;
-justify-content: center;
-backdrop-filter: blur(10px);
-box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-}
-/* SUBMIT BUTTON styling */
-div[data-testid="stFormSubmitButton"] button {
-background: linear-gradient(135deg, #fb7185 0%, #e11d48 100%) !important;
-color: white !important;
-border: none !important;
-border-radius: 999px !important;
-padding: 0.75rem 2rem !important;
-width: 100% !important;
-font-weight: 700 !important;
-font-size: 1rem !important;
-margin-top: 1rem !important;
-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3) !important;
-}
-div[data-testid="stFormSubmitButton"] button:hover {
-transform: translateY(-2px) !important;
-box-shadow: 0 8px 20px rgba(225, 29, 72, 0.4) !important;
-filter: brightness(1.1);
-}
-div[data-testid="stFormSubmitButton"] button:active {
-transform: translateY(0px) !important;
-}
+    /* INPUT STYLING */
+    .stTextInput div[data-baseweb="input"] {
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 12px !important;
+        transition: all 0.3s ease !important;
+    }
+    .stTextInput div[data-baseweb="input"]:focus-within {
+        border-color: #38bdf8 !important;
+        box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2) !important;
+    }
+    .stTextInput input {
+        color: white !important;
+        padding: 0.75rem 1rem !important;
+    }
+    .stTextInput label { display: none !important; }
+
+    /* PASSWORD TOGGLE FIX */
+    button[data-testid="stTextInputPasswordVisibility"] {
+        background: transparent !important;
+        border: none !important;
+        color: #94a3b8 !important;
+        box-shadow: none !important;
+    }
+
+    /* LOGIN LOGO */
+    .logo-glow {
+        filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.4));
+    }
+
+    /* BUTTONS */
+    div[data-testid="stFormSubmitButton"] button {
+        background: linear-gradient(135deg, #38bdf8 0%, #1d4ed8 100%) !important;
+        border: none !important;
+        border-radius: 12px !important;
+        padding: 0.8rem !important;
+        font-weight: 700 !important;
+        font-size: 1rem !important;
+        color: white !important;
+        width: 100% !important;
+        margin-top: 1rem !important;
+    }
+
+    /* LOGOUT BUTTON - FIXED CORNER */
+    .fixed-logout {
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        z-index: 9999;
+    }
+    .fixed-logout button {
+        background: rgba(239, 68, 68, 0.1) !important;
+        border: 1px solid rgba(239, 68, 68, 0.2) !important;
+        border-radius: 50px !important;
+        color: #f87171 !important;
+        padding: 0.4rem 1.2rem !important;
+        font-weight: 600 !important;
+        font-size: 0.85rem !important;
+        backdrop-filter: blur(8px) !important;
+    }
+    .fixed-logout button:hover {
+        background: rgba(239, 68, 68, 0.2) !important;
+        border-color: #f87171 !important;
+    }
+
+    /* SUBJECT CARDS */
+    .subject-row {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        padding: 1rem 1.25rem;
+        margin-bottom: 0.75rem;
+        transition: transform 0.2s;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .subject-row:hover { transform: translateY(-2px); border-color: rgba(56, 189, 248, 0.2); }
+
+    /* COLORS */
+    .text-green { color: #10b981 !important; }
+    .text-yellow { color: #fbbf24 !important; }
+    .text-red { color: #f87171 !important; }
+
+    /* Hide scrollbar but keep functionality */
+    ::-webkit-scrollbar { width: 0px; background: transparent; }
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 """, unsafe_allow_html=True)
 
 # Install Playwright Dependencies (Cached)
 @st.cache_resource
 def install_browsers():
     try:
-        # Check if we can run playwright
         subprocess.run([sys.executable, "-m", "playwright", "install", "chromium"], check=True)
     except Exception as e:
-        st.error(f"Failed to install Playwright browsers: {e}")
+        st.error(f"Failed to install Playwright: {e}")
 
 install_browsers()
 
-# Logic to fetch attendance (Adapted from original app.py)
+# Logic to fetch attendance
 def fetch_attendance(username, password):
     with sync_playwright() as p:
         try:
-            browser = p.chromium.launch(headless=True, args=['--no-sandbox', '--disable-setuid-sandbox'])
+            browser = p.chromium.launch(headless=True, args=['--no-sandbox'])
             page = browser.new_page()
-            
-            # Navigate
             page.goto("http://mitsims.in/", timeout=60000)
             
-            # Login
+            # Login Process
             page.wait_for_selector("#studentLink", state="visible")
             page.click("#studentLink", force=True)
-            
             page.wait_for_selector("#stuLogin", state="visible")
-            page.fill("#studentForm #inputStuId", "")
-            page.type("#studentForm #inputStuId", username, delay=50)
-            page.fill("#studentForm #inputPassword", "")
-            page.type("#studentForm #inputPassword", password, delay=50)
             
+            page.fill("#studentForm #inputStuId", username)
+            page.fill("#studentForm #inputPassword", password)
             page.click("#studentSubmitButton", force=True)
             
-            # Validation
+            # Wait & Parse
             try:
-                page.wait_for_selector("#studentName, #studentErrorDiv", timeout=8000)
+                page.wait_for_selector("#studentName, #studentErrorDiv", timeout=10000)
             except:
-                # Fallback JS Submit
-                page.evaluate("""
-                    var form = document.querySelector('#studentForm');
-                    if (form) form.submit();
-                """)
-                page.wait_for_selector("#studentName, #studentErrorDiv", timeout=15000)
+                page.evaluate("if(document.querySelector('#studentForm')) document.querySelector('#studentForm').submit();")
+                page.wait_for_selector("#studentName, #studentErrorDiv", timeout=10000)
 
-            # Check Errors
-            error_div = page.query_selector("#studentErrorDiv")
-            if error_div:
-                err_text = error_div.inner_text().strip()
-                if err_text:
-                    browser.close()
-                    return {"error": err_text}
+            # Error Check
+            error = page.query_selector("#studentErrorDiv")
+            if error and error.inner_text().strip():
+                browser.close()
+                return {"error": error.inner_text().strip()}
             
-            # Custom wait to ensure table loads
-            time.sleep(4)
-
-            # Check Login Success
-            if "dashboard" not in page.url.lower() and not page.query_selector("#studentName"):
-                 browser.close()
-                 return {"error": "Login failed (Still on login page). Check credentials."}
-
-            # Extract Data
+            time.sleep(3)
             full_text = page.inner_text("body")
             
-            # Name
-            student_name = ""
-            try:
-                match = re.search(r"([A-Z\s]+)\s+\|\s+Change Password", full_text)
-                if match:
-                    student_name = match.group(1).strip()
-            except:
-                pass
-                
-            # Parse Attendance
+            # Name extraction
+            student_name = "Student"
+            name_match = re.search(r"([A-Z\s]+)\s+\|\s+Change Password", full_text)
+            if name_match: student_name = name_match.group(1).strip()
+            
             attendance_data = []
-            
-            # Optimized parsing logic
             lines = [l.strip() for l in full_text.split('\n') if l.strip()]
-            IGNORE_PHRASES = ["TOTAL CONDUCTED", "CLASSES ATTENDED", "ATTENDANCE", "SUBJECT CODE", "S.NO", "SUBJECT DETAILS", "SEMESTER ACTIVITY"]
-            
             for i, line in enumerate(lines):
-                if any(phrase in line.upper() for phrase in IGNORE_PHRASES):
-                    continue
-                
-                match_subject_code = re.match(r'^\d*[A-Z]+\d+[A-Z0-9]*$', line)
-                is_text_subject = (line.isupper() and len(line) > 3 and not re.search(r'\d', line))
-                
-                if match_subject_code or is_text_subject:
+                if re.match(r'^\d*[A-Z]+\d+[A-Z0-9]*$', line) or (line.isupper() and len(line) > 3 and not re.search(r'\d', line)):
                     try:
                         lookahead = lines[i+1:i+6]
-                        numbers = []
+                        nums = []
                         for sub in lookahead:
                             if re.match(r'^[\d\.]+%?$', sub) or sub == '-':
-                                val = sub.replace('%', '').replace('-', '0')
-                                numbers.append(float(val))
-                        
-                        if len(numbers) >= 3:
-                            # Usually: Attended, Total, Percentage
-                            # Or: Total, Attended, Percentage?
-                            # Standard format: Attended, Conducted, %
-                            # Verification: Total >= Attended
-                            attended = numbers[0]
-                            total = numbers[1]
-                            percentage = numbers[2]
-                            
-                            # Sometimes orders are swapped, let's heuristic
-                            # If first number > second number, swap? No, Attended <= Total.
-                            if attended > total:
-                                # swap? depends on portal columns. Assuming logic from app.py is correct:
-                                # app.py line 200: attended=numbers_found[0], total=numbers_found[1]
-                                pass
-                                
-                            if total >= attended and percentage <= 100.0:
-                                attendance_data.append({
-                                    "code": line,
-                                    "attended": int(attended),
-                                    "total": int(total),
-                                    "percentage": percentage
-                                })
-                    except:
-                        pass
+                                nums.append(float(sub.replace('%', '').replace('-', '0')))
+                        if len(nums) >= 3:
+                            attendance_data.append({
+                                "code": line,
+                                "attended": int(nums[0]),
+                                "total": int(nums[1]),
+                                "percentage": nums[2]
+                            })
+                    except: pass
             
             browser.close()
-            return {
-                "success": True, 
-                "name": student_name, 
-                "data": attendance_data, 
-                "debug_text": full_text[:2000] if not attendance_data else ""
-            }
-            
+            return {"success": True, "name": student_name, "data": attendance_data}
         except Exception as e:
             return {"error": f"Connection Error: {str(e)}"}
 
+# --- SESSION STATE ---
+if 'logged_in' not in st.session_state: st.session_state.logged_in = False
+if 'data' not in st.session_state: st.session_state.data = None
+if 'user_name' not in st.session_state: st.session_state.user_name = ""
 
-# --- UI LAYOUT ---
-
-# State Management
-if 'logged_in' not in st.session_state:
-    st.session_state.logged_in = False
-if 'data' not in st.session_state:
-    st.session_state.data = None
-if 'user_name' not in st.session_state:
-    st.session_state.user_name = ""
-
-# Login Screen
+# --- LOGIN SCREEN ---
 if not st.session_state.logged_in:
-    st.markdown('<div class="login-spacer"></div>', unsafe_allow_html=True)
-    
-    # Custom Logo & Header matching the screenshot look
+    st.markdown('<div class="h-10"></div>', unsafe_allow_html=True)
     st.markdown("""
-        <div style="text-align: center; margin-bottom: 2rem;">
-            <div class="logo-container">
-                <div class="logo-circle">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#38bdf8" viewBox="0 0 16 16">
-                      <path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/>
+        <div class="text-center mb-8">
+            <div class="flex justify-center mb-4">
+                <div class="bg-blue-500/10 p-5 rounded-3xl border border-blue-500/20 logo-glow">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#38bdf8" viewBox="0 0 16 16">
+                        <path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/>
                     </svg>
                 </div>
             </div>
-            <h1 style="font-weight: 800; font-size: 1.8rem; color: white; margin-bottom: 0.5rem; letter-spacing: 0.5px; text-transform: uppercase;">MITS IMS</h1>
-            <p style="color: #64748b; font-size: 0.9rem; font-weight: 400;">Secure Login for Students</p>
+            <h1 class="text-3xl font-extrabold tracking-tight text-white mb-1">MITS IMS</h1>
+            <p class="text-slate-400 text-sm">Attendance Portal for Students</p>
         </div>
     """, unsafe_allow_html=True)
-    
+
     with st.form("login_form"):
-        # Labels are hidden via CSS for cleaner glassmorphism look
         username = st.text_input("Username", placeholder="Registration Number")
         password = st.text_input("Password", placeholder="Password", type="password")
-        
         submitted = st.form_submit_button("Sign In")
         
         if submitted:
             if not username or not password:
                 st.warning("Please enter Credentials")
             else:
-                with st.spinner("Connecting to MITS Portal..."):
-                    result = fetch_attendance(username, password)
-                    
-                if "error" in result:
-                    st.error(result['error'])
-                else:
-                    st.session_state.logged_in = True
-                    st.session_state.data = result['data']
-                    st.session_state.user_name = result['name']
-                    st.session_state.debug_text = result.get('debug_text', "")
-                    st.rerun()
+                with st.spinner("Logging in..."):
+                    res = fetch_attendance(username, password)
+                    if "error" in res:
+                        st.error(res['error'])
+                    else:
+                        st.session_state.logged_in = True
+                        st.session_state.data = res['data']
+                        st.session_state.user_name = res['name']
+                        st.rerun()
 
-# Dashboard Screen
+# --- DASHBOARD SCREEN ---
 else:
-    # Header
-    # Header (Logout Button Only)
-    c_spacer, c_logout = st.columns([5, 1])
-    with c_logout:
-       if st.button("Logout", key="logout"):
-           st.session_state.logged_in = False
-           st.session_state.data = None
-           st.rerun()
+    # Top-right Logout
+    st.markdown('<div class="fixed-logout">', unsafe_allow_html=True)
+    if st.button("Logout", key="logout_btn"):
+        st.session_state.logged_in = False
+        st.session_state.data = None
+        st.rerun()
+    st.markdown('</div>', unsafe_allow_html=True)
 
     data = st.session_state.data
     
-    if not data:
-        st.info("No attendance data found. The page might not have loaded correctly.")
-        pass
-    else:
-        # Statistics
-        total_attended = sum(d['attended'] for d in data)
-        total_conducted = sum(d['total'] for d in data)
-        overall = (total_attended / total_conducted * 100) if total_conducted > 0 else 0
-        
-        # Color for overall
-        agg_hex = '#34d399' # Green
-        if overall < 75:
-            agg_hex = '#fbbf24' # Yellow
-        if overall < 65:
-            agg_hex = '#f87171' # Red
-            
-        overall_str = f"{overall:.2f}"
-        
-        st.markdown(f'''
-<div class="aggregate-card">
-    <p style="color: #94a3b8; font-size: 0.875rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">Aggregate Percentage</p>
-    <h1 style="font-size: 3.5rem; font-weight: 700; color: {agg_hex}; margin: 0; line-height: 1;">{overall_str}%</h1>
-     <p style="color: #64748b; margin-top: 1rem; font-size: 0.875rem;">
-        Classes Attended: <b style="color: #f1f5f9">{total_attended}</b> / <span style="color: #94a3b8">{total_conducted}</span>
-    </p>
-</div>
-''', unsafe_allow_html=True)
-        
-        # Grid for Subjects
-        st.subheader("Subject Detailed Report")
-        
-        for item in data:
-            perc = item['percentage']
-            attended = item['attended']
-            total = item['total']
-            
-            # Recalculate true percentage for graph width validity (fallback if perc is 0 but stats exist)
-            if total > 0:
-                graph_width = (attended / total) * 100
-                if perc == 0 and graph_width > 0:
-                     perc = round(graph_width, 2)
-            else:
-                graph_width = 0
-            
-            # Default color class (Must be outside the else block!)
-            text_cls = "text-green"
-            
-            if perc < 75:
-                text_cls = "text-yellow"
-            if perc < 65:
-                text_cls = "text-red"
-
-                
-            # Custom Card HTML (No Graph, explicitly showing counts)
-            card_html = f'''
-<div class="custom-card" style="align-items: center;">
-    <div style="flex: 1;">
-        <div style="font-weight: 700; font-size: 1.1rem; color: white; margin-bottom: 0.4rem;">{item['code']}</div>
-        <div style="display: flex; gap: 1rem; font-size: 0.85rem; color: #94a3b8;">
-            <div>Attended: <b style="color: #cbd5e1;">{attended}</b></div>
-            <div>Conducted: <b style="color: #cbd5e1;">{total}</b></div>
+    # Welcome Header
+    st.markdown(f"""
+        <div class="mb-8">
+            <span class="text-xs font-semibold text-blue-400 uppercase tracking-widest bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">Dashboard</span>
+            <h2 class="text-2xl font-bold mt-3 text-white">Hello, {st.session_state.user_name} 👋</h2>
+            <p class="text-slate-400 text-sm">Here's your attendance breakdown.</p>
         </div>
-    </div>
-    <div class="percentage-display {text_cls}" style="font-size: 1.75rem;">
-        {perc}%
-    </div>
-</div>
-'''
-            st.markdown(card_html, unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
 
-# Footer (Always Visible)
-st.markdown('''
-<div class="custom-footer" style="text-align: center; margin: 2rem auto; width: 100%;">
-    <p>&copy; 2025 MITS IMS. All Rights Reserved.</p>
-</div>
-''', unsafe_allow_html=True)
+    if not data:
+        st.info("No data fetched. Please re-login.")
+    else:
+        # Aggregate Card
+        total_att = sum(d['attended'] for d in data)
+        total_con = sum(d['total'] for d in data)
+        overall = (total_att / total_con * 100) if total_con > 0 else 0
+        
+        clr = 'text-green'
+        if overall < 75: clr = 'text-yellow'
+        if overall < 65: clr = 'text-red'
+            
+        st.markdown(f'''
+            <div class="glass-card text-center mb-8">
+                <p class="text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">Aggregate Percentage</p>
+                <h1 class="text-5xl font-extrabold {clr}">{overall:.2f}%</h1>
+                <div class="mt-4 text-slate-300 text-sm font-medium">
+                    <span class="bg-slate-700/50 px-3 py-1 rounded-lg">{total_att}</span>
+                    <span class="mx-2 opacity-30">/</span>
+                    <span class="text-slate-500">{total_con}</span> 
+                    <span class="ml-1 text-slate-500">Classes</span>
+                </div>
+            </div>
+        ''', unsafe_allow_html=True)
 
-# End of file marker
-pass
+        st.markdown('<h3 class="text-white font-bold text-sm uppercase tracking-tight mb-4">Detailed Report</h3>', unsafe_allow_html=True)
+
+        # Subject List
+        for d in data:
+            p = d['percentage']
+            s_clr = 'text-green'
+            if p < 75: s_clr = 'text-yellow'
+            if p < 65: s_clr = 'text-red'
+            
+            st.markdown(f'''
+                <div class="subject-row">
+                    <div class="flex-1">
+                        <div class="text-white font-bold text-sm leading-tight mb-1">{d['code']}</div>
+                        <div class="text-slate-500 text-[11px] font-medium">
+                            Attended: <span class="text-slate-300">{d['attended']}</span> | 
+                            Total: <span class="text-slate-300">{d['total']}</span>
+                        </div>
+                    </div>
+                    <div class="text-lg font-extrabold {s_clr}">
+                        {p}%
+                    </div>
+                </div>
+            ''', unsafe_allow_html=True)
+
+# Footer
+st.markdown("""
+    <div class="text-center py-12 text-slate-600 font-medium text-[11px] uppercase tracking-widest">
+        &copy; 2025 MITS IMS • Modern Attendance UI
+    </div>
+""", unsafe_allow_html=True)
