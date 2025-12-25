@@ -4,6 +4,7 @@ import time
 import re
 import subprocess
 import sys
+import math
 
 # Page Configuration
 st.set_page_config(
@@ -365,6 +366,24 @@ else:
                     </div>
                 </div>
             ''', unsafe_allow_html=True)
+
+        st.markdown('<h3 class="text-white font-bold text-sm uppercase tracking-tight mb-4">Target Calculator</h3>', unsafe_allow_html=True)
+        
+        with st.container():
+            st.markdown('<div class="glass-card mb-8">', unsafe_allow_html=True)
+            
+            target_pct = st.slider("Target Percentage (%)", 75, 95, 75)
+            
+            if overall < target_pct:
+                needed = math.ceil((target_pct * total_con - 100 * total_att) / (100 - target_pct))
+                if needed > 0:
+                    st.success(f"You need to attend **{needed}** more classes to reach {target_pct}%.")
+                else:
+                    st.info(f"You are already above {target_pct}%.")
+            else:
+                st.info(f"You are already at {overall:.2f}%. Target {target_pct}% reached!")
+            
+            st.markdown('</div>', unsafe_allow_html=True)
 
 # Footer
 st.markdown("""

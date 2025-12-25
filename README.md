@@ -1,34 +1,55 @@
-# MITS IMS Attendance Portal
+# 🎓 MITS IMS Attendance Tracker
 
-A modern, glassmorphism-styled web application to view your MITS IMS attendance.
+A high-performance **MITS IMS Attendance Automation & Analytical Dashboard** designed to automate portal interactions and provide strategic attendance insights.
 
-## Prerequisites
+## 🚀 Key Components
 
-- Python 3.x
-- Chrome Browser installed
+### 1. Automated Scraper (Playwright)
+*   **Engine**: Playwright (Chromium) for ExtJS portal interaction.
+*   **Logic**: Headless login with regex parsing of body text to extract Subject Codes, Classes Attended, and Total Conducted.
+*   **Stability**: Handled timeouts and masked portal error messages for better user experience.
 
-## Installation
+### 2. Glassmorphism Dashboard
+*   **UI**: Custom CSS Glassmorphism + Tailwind CSS integrated into Streamlit.
+*   **Analytics**: Aggregate percentage calculation and color-coded reporting (Green ≥75%, Yellow 65-74%, Red <65%).
 
-1.  Open this folder in your terminal.
-2.  Install dependencies:
-    ```bash
-    pip install flask flask-cors selenium webdriver_manager
-    ```
+---
 
-## Usage
+## 🧮 Actual Formula
 
-1.  Run the application:
-    ```bash
-    python app.py
-    ```
-2.  Open your browser and navigate to:
-    [http://127.0.0.1:5000](http://127.0.0.1:5000)
+### 1. Reach Target % (Classes to Attend)
+Calculates how many *more* classes are needed ($x$) to reach a target percentage ($T$) given current attended ($A$) and total conducted ($C$):
 
-3.  Enter your Register Number and Password.
-4.  The app will fetch and display your attendance percentage for each subject.
+$$x = \lceil \frac{(T \times C - 100 \times A)}{(100 - T)} \rceil$$
 
-## Features
+---
 
--   **Secure**: Runs locally on your machine.
--   **Automated**: Uses Selenium to log in and scrape data.
--   **Modern UI**: Beautiful glassmorphism design.
+## 🛠️ Tech Stack
+- **Web App**: Streamlit
+- **Scraping**: Playwright (Python)
+- **Math**: Python `math` library (Ceil)
+- **Design**: Custom CSS + Google Fonts (Outfit) + FontAwesome 6.4.0
+
+---
+
+## 🚀 Installation & Usage
+
+1. **Install dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   playwright install chromium
+   ```
+
+2. **Run the App**:
+   ```bash
+   streamlit run streamlit_app.py
+   ```
+
+---
+
+## 👨‍💻 Author
+**Deva Raj Bhojanapu**
+- [GitHub](https://github.com/Devarajb049/)
+
+---
+*Made with ❤️ for MITS Students.*
