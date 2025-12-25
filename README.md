@@ -15,19 +15,9 @@ A high-performance **MITS IMS Attendance Automation & Analytical Dashboard** des
 
 ---
 
-## 🧮 Actual Formula
-
-### 1. Reach Target % (Classes to Attend)
-Calculates how many *more* classes are needed ($x$) to reach a target percentage ($T$) given current attended ($A$) and total conducted ($C$):
-
-$$x = \lceil \frac{(T \times C - 100 \times A)}{(100 - T)} \rceil$$
-
----
-
 ## 🛠️ Tech Stack
 - **Web App**: Streamlit
 - **Scraping**: Playwright (Python)
-- **Math**: Python `math` library (Ceil)
 - **Design**: Custom CSS + Google Fonts (Outfit) + FontAwesome 6.4.0
 
 ---
@@ -50,6 +40,11 @@ $$x = \lceil \frac{(T \times C - 100 \times A)}{(100 - T)} \rceil$$
 ## 👨‍💻 Author
 **Deva Raj Bhojanapu**
 - [GitHub](https://github.com/Devarajb049/)
+
+---
+
+## 🔍 SEO Keywords
+`MITS IMS` `MITSIMS` `Attendance Tracker` `MITS Portal` `Student Attendance` `MITS Attendance Scraper` `MITS IMS Login` `MITS Attendance`
 
 ---
 *Made with ❤️ for MITS Students.*

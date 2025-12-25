@@ -4,15 +4,24 @@ import time
 import re
 import subprocess
 import sys
-import math
 
 # Page Configuration
 st.set_page_config(
-    page_title="MITS IMS Attendance",
+    page_title="MITS IMS Attendance Tracker | Check MITSIMS Attendance",
     page_icon="🎓",
     layout="centered",
     initial_sidebar_state="collapsed"
 )
+
+# --- SEO & Meta Tags ---
+st.markdown(r"""
+    <head>
+        <meta name="description" content="MITS IMS Attendance Tracker - Securely check and track your attendance from the MITSIMS portal with a modern glassmorphism UI.">
+        <meta name="keywords" content="MITS IMS, MITSIMS, Attendance Tracker, MITS Portal, Student Attendance, MITS Attendance Calculator, MITS IMS Login">
+        <meta name="author" content="Deva Raj Bhojanapu">
+        <link rel="canonical" href="https://mits-ims.streamlit.app/">
+    </head>
+""", unsafe_allow_html=True)
 
 # --- Consolidated Premium Styling (Glassmorphism + Tailwind) ---
 st.markdown(r"""
@@ -366,25 +375,6 @@ else:
                     </div>
                 </div>
             ''', unsafe_allow_html=True)
-
-        st.markdown('<h3 class="text-white font-bold text-sm uppercase tracking-tight mb-4">Target Calculator</h3>', unsafe_allow_html=True)
-        
-        with st.container():
-            st.markdown('<div class="glass-card mb-8">', unsafe_allow_html=True)
-            
-            target_pct = st.slider("Target Percentage (%)", 75, 95, 75)
-            
-            if overall < target_pct:
-                needed = math.ceil((target_pct * total_con - 100 * total_att) / (100 - target_pct))
-                if needed > 0:
-                    st.success(f"You need to attend **{needed}** more classes to reach {target_pct}%.")
-                else:
-                    st.info(f"You are already above {target_pct}%.")
-            else:
-                st.info(f"You are already at {overall:.2f}%. Target {target_pct}% reached!")
-            
-            st.markdown('</div>', unsafe_allow_html=True)
-
 # Footer
 st.markdown("""
     <div class="text-center py-12 text-slate-600 font-medium text-[11px] uppercase tracking-widest">
