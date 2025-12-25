@@ -151,34 +151,64 @@ install_browsers()
 # Logic to fetch attendance
 def fetch_attendance(username, password):
     with sync_playwright() as p:
+        browser = None
         try:
-            browser = p.chromium.launch(headless=True, args=['--no-sandbox'])
+            # Launch browser with stability flags
+            browser = p.chromium.launch(headless=True, args=['--no-sandbox', '--disable-setuid-sandbox'])
             page = browser.new_page()
-            page.goto("http://mitsims.in/", timeout=60000)
             
-            # Login Process
-            page.wait_for_selector("#studentLink", state="visible")
-            page.click("#studentLink", force=True)
-            page.wait_for_selector("#stuLogin", state="visible")
+            # 1. Page Navigation
+            try:
+                page.goto("http://mitsims.in/", timeout=45000)
+            except Exception:
+                return {"error": "The MITS server is taking too long to respond. Please try after some time."}
             
+            # 2. Login Step 1: Open LoginForm
+            try:
+                page.wait_for_selector("#studentLink", state="visible", timeout=15000)
+                page.click("#studentLink", force=True)
+                page.wait_for_selector("#studentForm #inputStuId", state="visible", timeout=15000)
+            except Exception:
+                return {"error": "Connection timed out. Please try after some time."}
+            
+            # 3. Login Step 2: Fill and Submit
             page.fill("#studentForm #inputStuId", username)
             page.fill("#studentForm #inputPassword", password)
             page.click("#studentSubmitButton", force=True)
             
-            # Wait & Parse
+            # 4. Wait for Result (Success or Error)
             try:
+                # Wait for either the dashboard element or error div
                 page.wait_for_selector("#studentName, #studentErrorDiv", timeout=10000)
             except:
-                page.evaluate("if(document.querySelector('#studentForm')) document.querySelector('#studentForm').submit();")
-                page.wait_for_selector("#studentName, #studentErrorDiv", timeout=10000)
+                # Fallback: force submit if click didn't trigger
+                try:
+                    page.evaluate("if(document.querySelector('#studentForm')) document.querySelector('#studentForm').submit();")
+                    page.wait_for_selector("#studentName, #studentErrorDiv", timeout=10000)
+                except Exception:
+                    # If we still haven't found a success or error marker
+                    return {"error": "Login failed or timed out. Please check your credentials and try after some time."}
 
-            # Error Check
-            error = page.query_selector("#studentErrorDiv")
-            if error and error.inner_text().strip():
-                browser.close()
-                return {"error": error.inner_text().strip()}
+            # 5. Explicit Error Check
+            error_div = page.query_selector("#studentErrorDiv")
+            if error_div:
+                err_text = ""
+                try:
+                    err_text = error_div.inner_text().strip()
+                except:
+                    pass
+                if err_text:
+                    # Mask technical errors with user-friendly message
+                    if any(kw in err_text.lower() for kw in ["invalid", "wrong", "mismatch", "incorrect"]):
+                        return {"error": "Invalid Registration Number or Password"}
+                    return {"error": err_text}
             
-            time.sleep(3)
+            # Verify if dashboard actually loaded
+            if not page.query_selector("#studentName"):
+                return {"error": "Invalid Registration Number or Password"}
+
+            # 6. Data Extraction
+            time.sleep(4) # Wait for attendance values to populate
             full_text = page.inner_text("body")
             
             # Name extraction
@@ -189,13 +219,10 @@ def fetch_attendance(username, password):
             attendance_data = []
             lines = [l.strip() for l in full_text.split('\n') if l.strip()]
             for i, line in enumerate(lines):
-                # Only process lines that look like subject codes or legitimate subject names
-                # AND skip the summary text headers that cause duplicate/invalid entries
                 upper_line = line.upper()
                 if "TOTAL CONDUCTED" in upper_line or "ATTENDANCE %" in upper_line:
                     continue
                 
-                # Check for subject code pattern (e.g., 23CSE101) or short uppercase subject name
                 is_subject = re.match(r'^\d*[A-Z]+\d+[A-Z0-9]*$', line) or (line.isupper() and 2 < len(line) < 30 and not re.search(r'\d', line))
                 
                 if is_subject:
@@ -214,10 +241,19 @@ def fetch_attendance(username, password):
                             })
                     except: pass
             
-            browser.close()
             return {"success": True, "name": student_name, "data": attendance_data}
+
         except Exception as e:
-            return {"error": f"Connection Error: {str(e)}"}
+            err_msg = str(e)
+            if "Target page, context or browser has been closed" in err_msg or "Timeout" in err_msg:
+                return {"error": "Connection timed out. Please try after some time."}
+            return {"error": "Something went wrong. Please try after some time."}
+        finally:
+            if browser:
+                try:
+                    browser.close()
+                except:
+                    pass
 
 # --- SESSION STATE ---
 if 'logged_in' not in st.session_state: st.session_state.logged_in = False
